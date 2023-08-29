@@ -8,7 +8,7 @@ public class Isik {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private String nimi;
 
     public Isik(){
 
@@ -20,5 +20,13 @@ public class Isik {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getNimi() {
+        return nimi;
+    }
+
+    public void setNimi(String nimi) {
+        this.nimi = nimi;
     }
 }
