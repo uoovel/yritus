@@ -1,0 +1,2 @@
+# yritus
+Üritustele registreerimise rakendus
