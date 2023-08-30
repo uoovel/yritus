@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>Loo uus üritus</title>
+    <link th:href="@{/styles/cssandjs/main.css}" rel="stylesheet" />
+</head>
+<body>
+<div align="center">
+    <div th:if="${yritus.id == null}"><h1>Loo uus üritus</h1></div>
+    <div th:unless="${yritus.id == null}"><h1>Muuda üritust</h1></div>
+    <br />
+    <form action="#" th:action="@{/save}" th:object="${yritus}"
+          method="post">
+        <input type="hidden" th:field="*{id}" th:value="${yritus.id}" />
+        <table border="0" cellpadding="10">
+            <tr>
+                <td>Ürituse nimetus:</td>
+                <td><input type="text" th:field="*{nimetus}" />
+                    <p th:if="${#fields.hasErrors('nimetus')}"
+                       th:errorclass="error" th:errors="*{nimetus}">
+                        Kontrolli nimetust</p>
+                </td>
+            </tr>
+
+
+
+            <tr>
+                <td></td>
+                <td colspan="2"><button type="submit">Salvesta</button> </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>
