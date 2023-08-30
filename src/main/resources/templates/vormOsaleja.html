@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>Lisa uus osaleja</title>
+    <link th:href="@{/styles/cssandjs/main.css}" rel="stylesheet" />
+</head>
+<body>
+<div align="center">
+    <div ><h1>Lisa uus isik</h1></div>
+
+    <br />
+    <form action="#" th:action="@{/savecustomer}" th:object="${osalus}"
+          method="post">
+
+        <input type="hidden" th:field="*{yritus.id}" th:value="${osalus.yritus.id}" />
+
+
+        <table border="0" cellpadding="10">
+            <tr>
+                <td>Nimi:</td>
+                <td><input type="text" th:field="*{isik.nimi}" />
+
+                </td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td colspan="2"><button type="submit">Save</button> </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>

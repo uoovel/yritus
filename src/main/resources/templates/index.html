@@ -19,7 +19,33 @@
 </div>
 <br>
 <br>
+<div align="center">
+    <h1>Ürituste loend</h1>
 
+    <br/><br/>
+    <table border="1" cellpadding="10">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nimetus</th>
+
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="yritus : ${listYritused}">
+            <td th:text="${yritus.id}">Ürituse ID</td>
+            <td th:text="${yritus.nimetus}">Nimetus</td>
+
+            <td>
+                <a th:href="@{'/vormOsaleja/' + ${yritus.id}}">Osavõtjad</a>
+                &nbsp;&nbsp;&nbsp;
+                <a th:href="@{'/delete/' + ${yritus.id}}">Kustuta</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
 </body></html>
 

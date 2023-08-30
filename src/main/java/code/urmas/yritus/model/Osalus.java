@@ -21,4 +21,27 @@ public class Osalus {
 
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Yritus getYritus() {
+        return yritus;
+    }
+
+    public void setYritus(Yritus yritus) {
+        this.yritus = yritus;
+    }
+
+    public Isik getIsik() {
+        return isik;
+    }
+
+    public void setIsik(Isik isik) {
+        this.isik = isik;
+    }
 }
