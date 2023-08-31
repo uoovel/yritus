@@ -10,6 +10,10 @@ public class Isik {
     private Long id;
     private String nimi;
 
+    @ManyToOne
+    @JoinColumn(name="tyyp_id")
+    private Tyyp tyyp;
+
     public Isik(){
 
     }
@@ -28,5 +32,13 @@ public class Isik {
 
     public void setNimi(String nimi) {
         this.nimi = nimi;
+    }
+
+    public Tyyp getTyyp() {
+        return tyyp;
+    }
+
+    public void setTyyp(Tyyp tyyp) {
+        this.tyyp = tyyp;
     }
 }

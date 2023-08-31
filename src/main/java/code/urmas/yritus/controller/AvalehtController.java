@@ -2,8 +2,11 @@ package code.urmas.yritus.controller;
 
 import code.urmas.yritus.model.Isik;
 import code.urmas.yritus.model.Osalus;
+import code.urmas.yritus.model.Tyyp;
 import code.urmas.yritus.model.Yritus;
 import code.urmas.yritus.service.OsalusService;
+import code.urmas.yritus.service.StartService;
+import code.urmas.yritus.service.TyypService;
 import code.urmas.yritus.service.YritusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,8 +24,18 @@ public class AvalehtController {
     @Autowired
     private OsalusService osalusService;
 
+    @Autowired
+    private StartService startService;
+    @Autowired
+    private TyypService tyypService;
+
     @RequestMapping("/")
     public String avaleht(Model model){
+        List<Tyyp> tyypList = tyypService.listAll();
+        if(tyypList.isEmpty()){
+            startService.lisaAlgandmed();
+        }
+
         List<Yritus> listYritused = yritusService.listAll();
         model.addAttribute("listYritused", listYritused);
         return "index.html";

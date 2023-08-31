@@ -16,21 +16,48 @@
 
         <input type="hidden" th:field="*{yritus.id}" th:value="${osalus.yritus.id}" />
 
+        <ul>
+            <li th:each="ty : ${listTyyp}">
+                <input type="radio" th:field="*{isik.tyyp}" th:value="${ty.id}" th:onclick="clickAction(value)"/>
+                <label th:for="${#ids.prev('isik.tyyp')}" th:text="${ty.nimetus}">Wireframe</label>
+            </li>
+        </ul>
 
-        <table border="0" cellpadding="10">
-            <tr>
-                <td>Nimi:</td>
-                <td><input type="text" th:field="*{isik.nimi}" />
+        <div id="eraisikuvorm">
+        <table border="0" cellpadding="10" >
 
-                </td>
-            </tr>
+                <tr>
+                    <td>Nimi:</td>
+                    <td><input type="text" th:field="*{isik.nimi}" />
+
+                    </td>
+                </tr>
+
+
 
             <tr>
                 <td></td>
                 <td colspan="2"><button type="submit">Save</button> </td>
             </tr>
         </table>
+        </div>
     </form>
 </div>
+<script>
+    function clickAction(value){
+        alert("Klikkisid, aga kumba?");
+        alert(value);
+        if(value == 1){
+            alert("Eraisik");
+            document.getElementById("eraisikuvorm").disabled = false;
+        }
+
+        if(value == 2){
+            alert("Ettevõte");
+            document.getElementById("eraisikuvorm").style.display = "none";
+        }
+
+    }
+</script>
 </body>
 </html>
