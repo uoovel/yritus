@@ -1,0 +1,54 @@
+<!-- https://frontbackend.com/thymeleaf/spring-boot-bootstrap-thymeleaf-select-option -->
+<!-- https://stackoverflow.com/questions/33136866/display-a-string-that-contains-html-in-thymeleaf-template -->
+<!-- https://www.baeldung.com/thymeleaf-select-option -->
+<!-- https://stackoverflow.com/questions/35655009/thymeleaf-doesnt-select-disabled-option -->
+<!-- https://www.baeldung.com/spring-thymeleaf-error-messages -->
+<!-- saved from url=(0094)file:///C:/Users/oliver.stimmer/AppData/Roaming/Skype/My%20Skype%20Received%20Files/index.html -->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <html><head>
+        <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+        <link th:href="@{/styles/cssandjs/main.css}" rel="stylesheet" />
+    </head><body> <h1>Kõik osalejad valikulisel üritusel</h1>
+    <div align="center">
+        <a href="/">Avaleht</a>
+        <a href="/newevent">Ürituse lisamine</a>
+
+    </div>
+    <br>
+    <br>
+    <div align="center">
+        <h1>Osalejate loend</h1>
+
+        <br/><br/>
+        <table border="1" cellpadding="10">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nimi</th>
+
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="osalus : ${listOsalus}">
+                <td th:text="${osalus.isik.id}">Osaleja ID</td>
+                <td th:text="${osalus.isik.nimi}">Nimi</td>
+
+                <td>
+
+                    &nbsp;&nbsp;&nbsp;
+                    <a th:href="@{'/delete/' + ${osalus.isik.id}}">Kustuta</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    </body></html>
+
+
+
+

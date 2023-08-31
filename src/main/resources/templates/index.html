@@ -35,7 +35,9 @@
         <tbody>
         <tr th:each="yritus : ${listYritused}">
             <td th:text="${yritus.id}">Ürituse ID</td>
-            <td th:text="${yritus.nimetus}">Nimetus</td>
+            <td>
+                <a th:href="@{'/koikOsalejad/' + ${yritus.id}}" th:text="${yritus.nimetus}">Nimetus</a>
+            </td>
 
             <td>
                 <a th:href="@{'/vormOsaleja/' + ${yritus.id}}">Osavõtjad</a>
