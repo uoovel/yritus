@@ -26,6 +26,8 @@ public class IsikController {
     private TyypService tyypService;
     @Autowired
     private EraisikService eraisikService;
+    @Autowired
+    private EttevoteService ettevoteService;
 
     @RequestMapping("/vormOsaleja/{id}")
     public String showOsalejadForm(@PathVariable(name = "id") int id, Model model) {
@@ -61,11 +63,20 @@ public class IsikController {
 
 
         Isik isik = osalus.getIsik();
-        Eraisik eraisik = isik.getEraisik();
-        Eraisik savedEraisik = eraisikService.saveEraisik(eraisik);
 
-        isik.setNimi(eraisik.getEesnimi());
-        isik.setEttevote(null);
+        if(isik.getTyyp().getId() == 1){
+            Eraisik eraisik = isik.getEraisik();
+            Eraisik savedEraisik = eraisikService.saveEraisik(eraisik);
+            isik.setNimi(eraisik.getEesnimi());
+            isik.setEttevote(null);
+        }
+        if(isik.getTyyp().getId() == 2){
+            Ettevote ettevote = isik.getEttevote();
+            Ettevote savedEttevote = ettevoteService.saveEttevote(ettevote);
+            isik.setNimi(ettevote.getJuriidilinenimi());
+            isik.setEraisik(null);
+        }
+
         Isik isikSaved = isikService.saveCustomer(isik);
 
         Long yritusId = osalus.getYritus().getId();
