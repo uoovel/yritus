@@ -1,13 +1,7 @@
 package code.urmas.yritus.controller;
 
-import code.urmas.yritus.model.Isik;
-import code.urmas.yritus.model.Osalus;
-import code.urmas.yritus.model.Tyyp;
-import code.urmas.yritus.model.Yritus;
-import code.urmas.yritus.service.IsikService;
-import code.urmas.yritus.service.OsalusService;
-import code.urmas.yritus.service.TyypService;
-import code.urmas.yritus.service.YritusService;
+import code.urmas.yritus.model.*;
+import code.urmas.yritus.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -26,11 +20,12 @@ public class IsikController {
     private YritusService yritusService;
     @Autowired
     private IsikService isikService;
-
     @Autowired
     private OsalusService osalusService;
     @Autowired
     private TyypService tyypService;
+    @Autowired
+    private EraisikService eraisikService;
 
     @RequestMapping("/vormOsaleja/{id}")
     public String showOsalejadForm(@PathVariable(name = "id") int id, Model model) {
@@ -63,7 +58,15 @@ public class IsikController {
             return "vormOsaleja.html";
         }
 
-        Isik isikSaved = isikService.saveCustomer(osalus.getIsik());
+
+
+        Isik isik = osalus.getIsik();
+        Eraisik eraisik = isik.getEraisik();
+        Eraisik savedEraisik = eraisikService.saveEraisik(eraisik);
+
+        isik.setNimi(eraisik.getEesnimi());
+        isik.setEttevote(null);
+        Isik isikSaved = isikService.saveCustomer(isik);
 
         Long yritusId = osalus.getYritus().getId();
 
