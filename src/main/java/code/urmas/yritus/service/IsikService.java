@@ -17,4 +17,7 @@ public class IsikService {
         return savedIsik;
     }
 
+    public Isik get(long id) {
+        return isikRepository.findById(id).get();
+    }
 }

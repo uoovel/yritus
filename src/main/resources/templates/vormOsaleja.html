@@ -27,36 +27,39 @@
         <table border="0" cellpadding="10" >
             <tr>
                 <td>Eesnimi:</td>
-                <td><input type="text" th:field="*{isik.eraisik.eesnimi}" />
+                <td><input type="text" th:field="*{eraisik.eesnimi}" />
 
                 </td>
             </tr>
-            <tr>
-                <td>Makseviis:</td>
-                <td>
-                    <select th:field="*{makseviis.id}" id="makseviis" name="makseviis">
-                        <option value="0" th:disabled="disabled">--please select--</option>
 
-                        <th:block th:each="makseviis: ${makseviisList}">
-
-                            <option th:utext="${makseviis.nimetus}" th:value="${makseviis.id}" />
-
-                        </th:block>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td colspan="2"><button type="submit">Save</button> </td>
-            </tr>
         </table>
         </div>
         <div id="firmavorm">
             <table border="0" cellpadding="10" >
                 <tr>
                     <td>Juriidiline Nimi:</td>
-                    <td><input type="text" th:field="*{isik.ettevote.juriidilinenimi}" />
+                    <td><input type="text" th:field="*{ettevote.juriidilinenimi}" />
 
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+        <div>
+            <table border="0" cellpadding="10" >
+
+                <tr>
+                    <td>Makseviis:</td>
+                    <td>
+                        <select th:field="*{makseviis.id}" id="makseviis" name="makseviis">
+                            <option value="0" th:disabled="disabled">--please select--</option>
+
+                            <th:block th:each="makseviis: ${makseviisList}">
+
+                                <option th:utext="${makseviis.nimetus}" th:value="${makseviis.id}" />
+
+                            </th:block>
+                        </select>
                     </td>
                 </tr>
                 <tr>

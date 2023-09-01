@@ -13,7 +13,7 @@ public class Isik {
     @ManyToOne
     @JoinColumn(name="tyyp_id")
     private Tyyp tyyp;
-
+/*
     @OneToOne
     @JoinColumn(name="eraisik_id")
     private Eraisik eraisik;
@@ -21,7 +21,7 @@ public class Isik {
     @OneToOne
     @JoinColumn(name="ettevote_id")
     private Ettevote ettevote;
-
+*/
     public Isik(){
 
     }
@@ -49,7 +49,7 @@ public class Isik {
     public void setTyyp(Tyyp tyyp) {
         this.tyyp = tyyp;
     }
-
+/*
     public Eraisik getEraisik() {
         return eraisik;
     }
@@ -64,5 +64,5 @@ public class Isik {
 
     public void setEttevote(Ettevote ettevote) {
         this.ettevote = ettevote;
-    }
+    }*/
 }

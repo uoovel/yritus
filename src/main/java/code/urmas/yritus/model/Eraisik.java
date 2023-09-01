@@ -1,9 +1,6 @@
 package code.urmas.yritus.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Eraisik {
@@ -14,9 +11,13 @@ public class Eraisik {
     private String Perekonnanimi;
     private String Isikukood;
 
+    @OneToOne
+    @JoinColumn(name="isik_id")
+    private Isik isik;
+
     public Eraisik(){
 
-    };
+    }
 
     public Long getId() {
         return id;
@@ -48,5 +49,13 @@ public class Eraisik {
 
     public void setIsikukood(String isikukood) {
         Isikukood = isikukood;
+    }
+
+    public Isik getIsik() {
+        return isik;
+    }
+
+    public void setIsik(Isik isik) {
+        this.isik = isik;
     }
 }

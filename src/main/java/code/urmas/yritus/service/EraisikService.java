@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @Transactional
 public class EraisikService {
@@ -17,5 +19,13 @@ public class EraisikService {
     public Eraisik saveEraisik(Eraisik eraisik) {
         Eraisik savederaIsik = eraisikRepository.save(eraisik);
         return savederaIsik;
+    }
+
+
+
+
+
+    public Eraisik getByIsik(Isik isik) {
+        return eraisikRepository.findOneByIsik(isik);
     }
 }

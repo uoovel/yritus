@@ -1,9 +1,6 @@
 package code.urmas.yritus.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Ettevote {
@@ -14,6 +11,10 @@ public class Ettevote {
     private String juriidilinenimi;
 
     private String registrikood;
+
+    @OneToOne
+    @JoinColumn(name="isik_id")
+    private Isik isik;
 
     public Ettevote(){
 
@@ -41,5 +42,13 @@ public class Ettevote {
 
     public void setRegistrikood(String registrikood) {
         this.registrikood = registrikood;
+    }
+
+    public Isik getIsik() {
+        return isik;
+    }
+
+    public void setIsik(Isik isik) {
+        this.isik = isik;
     }
 }

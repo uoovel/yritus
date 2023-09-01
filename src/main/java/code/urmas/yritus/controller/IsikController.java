@@ -2,6 +2,7 @@ package code.urmas.yritus.controller;
 
 import code.urmas.yritus.model.*;
 import code.urmas.yritus.service.*;
+import code.urmas.yritus.service.dto.OsalusDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class IsikController {
@@ -36,18 +38,18 @@ public class IsikController {
         Yritus yritus = yritusService.get(id);
 
 
-        Osalus osalus = new Osalus();
+        OsalusDto osalusDto = new OsalusDto();
 
-        osalus.setYritus(yritus);
+        osalusDto.setYritus(yritus);
 
-        Isik isik = new Isik();
+        //Isik isik = new Isik();
         //Tyyp tyyp = new Tyyp();
         //isik.setTyyp(tyyp);
-        osalus.setIsik(isik);
+        //osalus.setIsik(isik);
+        //Eraisik
 
 
-
-        model.addAttribute("osalus", osalus);
+        model.addAttribute("osalus", osalusDto);
         //model.addAttribute("isik", isik);
 
         List<Tyyp> listTyyp = tyypService.listAll();
@@ -60,7 +62,7 @@ public class IsikController {
     }
 
     @RequestMapping(value = "/savecustomer", method = RequestMethod.POST)
-    public String saveCustomer(@ModelAttribute("osalus") Osalus osalus, BindingResult result) {
+    public String saveCustomer(@ModelAttribute("osalus") OsalusDto osalus, BindingResult result) {
         if(result.hasErrors()) {
             return "vormOsaleja.html";
         }
@@ -68,21 +70,27 @@ public class IsikController {
 
 
         Isik isik = osalus.getIsik();
+        Isik isikSaved = null;
+
 
         if(isik.getTyyp().getId() == 1){
-            Eraisik eraisik = isik.getEraisik();
-            Eraisik savedEraisik = eraisikService.saveEraisik(eraisik);
+            Eraisik eraisik = osalus.getEraisik();
             isik.setNimi(eraisik.getEesnimi());
-            isik.setEttevote(null);
+            isikSaved = isikService.saveCustomer(isik);
+            eraisik.setIsik(isikSaved);
+            Eraisik savedEraisik = eraisikService.saveEraisik(eraisik);
         }
         if(isik.getTyyp().getId() == 2){
-            Ettevote ettevote = isik.getEttevote();
-            Ettevote savedEttevote = ettevoteService.saveEttevote(ettevote);
+            Ettevote ettevote = osalus.getEttevote();
             isik.setNimi(ettevote.getJuriidilinenimi());
-            isik.setEraisik(null);
+            isikSaved = isikService.saveCustomer(isik);
+            ettevote.setIsik(isikSaved);
+            Ettevote savedEttevote = ettevoteService.saveEttevote(ettevote);
+
+
         }
 
-        Isik isikSaved = isikService.saveCustomer(isik);
+
 
         Long yritusId = osalus.getYritus().getId();
 
@@ -95,6 +103,33 @@ public class IsikController {
         osalusSalvestatav.setMakseviis(makseviis);
 
         osalusService.saveOsalus(osalusSalvestatav);
+
+        return "redirect:/";
+    }
+
+    @RequestMapping("/vaataIsikut/{id}")
+    public String showIsikDetailForm(@PathVariable(name = "id") int id, Model model) {
+        Isik isik = isikService.get(id);
+        int tyypId = (isik.getTyyp().getId()).intValue();
+
+        if(tyypId == 1){
+            Eraisik eraisik = eraisikService.getByIsik(isik);
+            eraisik.setIsik(isik);
+            System.out.println("IsikController100: " + eraisik.getId());
+            model.addAttribute("eraisik", eraisik);
+            return "eraisikDetail.html";
+        }else{
+            return "ettevoteDetail.html";
+        }
+    }
+
+    @RequestMapping(value = "/editeraisik", method = RequestMethod.POST)
+    public String editCustomer(@ModelAttribute("eraisik") Eraisik eraisik, BindingResult result) {
+
+        eraisikService.saveEraisik(eraisik);
+        Isik isik = eraisik.getIsik();
+        isik.setNimi(eraisik.getEesnimi());
+        isikService.saveCustomer(isik);
 
         return "redirect:/";
     }

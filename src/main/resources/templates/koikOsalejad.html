@@ -38,9 +38,9 @@
                 <td th:text="${osalus.isik.nimi}">Nimi</td>
 
                 <td>
-
+                    <a th:href="@{'/vaataIsikut/' + ${osalus.isik.id}}">Vaata</a>
                     &nbsp;&nbsp;&nbsp;
-                    <a th:href="@{'/delete/' + ${osalus.isik.id}}">Kustuta</a>
+                    <a th:href="@{'/deleteIsik/' + ${osalus.isik.id}}">Kustuta</a>
                 </td>
             </tr>
             </tbody>
