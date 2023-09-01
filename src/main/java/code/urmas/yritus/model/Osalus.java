@@ -17,6 +17,10 @@ public class Osalus {
     @JoinColumn(name="isik_id")
     private Isik isik;
 
+    @ManyToOne
+    @JoinColumn(name="makseviis_id")
+    private Makseviis makseviis;
+
     public Osalus(){
 
     }
@@ -43,5 +47,13 @@ public class Osalus {
 
     public void setIsik(Isik isik) {
         this.isik = isik;
+    }
+
+    public Makseviis getMakseviis() {
+        return makseviis;
+    }
+
+    public void setMakseviis(Makseviis makseviis) {
+        this.makseviis = makseviis;
     }
 }

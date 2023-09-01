@@ -25,12 +25,26 @@
 
         <div id="eraisikuvorm">
         <table border="0" cellpadding="10" >
-                <tr>
-                    <td>Eesnimi:</td>
-                    <td><input type="text" th:field="*{isik.eraisik.eesnimi}" />
+            <tr>
+                <td>Eesnimi:</td>
+                <td><input type="text" th:field="*{isik.eraisik.eesnimi}" />
 
-                    </td>
-                </tr>
+                </td>
+            </tr>
+            <tr>
+                <td>Makseviis:</td>
+                <td>
+                    <select th:field="*{makseviis.id}" id="makseviis" name="makseviis">
+                        <option value="0" th:disabled="disabled">--please select--</option>
+
+                        <th:block th:each="makseviis: ${makseviisList}">
+
+                            <option th:utext="${makseviis.nimetus}" th:value="${makseviis.id}" />
+
+                        </th:block>
+                    </select>
+                </td>
+            </tr>
             <tr>
                 <td></td>
                 <td colspan="2"><button type="submit">Save</button> </td>

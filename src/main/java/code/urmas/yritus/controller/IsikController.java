@@ -28,6 +28,8 @@ public class IsikController {
     private EraisikService eraisikService;
     @Autowired
     private EttevoteService ettevoteService;
+    @Autowired
+    private MakseviisService makseviisService;
 
     @RequestMapping("/vormOsaleja/{id}")
     public String showOsalejadForm(@PathVariable(name = "id") int id, Model model) {
@@ -50,6 +52,9 @@ public class IsikController {
 
         List<Tyyp> listTyyp = tyypService.listAll();
         model.addAttribute("listTyyp" ,listTyyp);
+
+        List<Makseviis> listMakseviis = makseviisService.listAll();
+        model.addAttribute("makseviisList" ,listMakseviis);
 
         return "vormOsaleja.html";
     }
@@ -82,10 +87,12 @@ public class IsikController {
         Long yritusId = osalus.getYritus().getId();
 
         Yritus yritus = yritusService.get(yritusId);
+        Makseviis makseviis = makseviisService.get(osalus.getMakseviis().getId());
 
         Osalus osalusSalvestatav = new Osalus();
         osalusSalvestatav.setYritus(yritus);
         osalusSalvestatav.setIsik(isikSaved);
+        osalusSalvestatav.setMakseviis(makseviis);
 
         osalusService.saveOsalus(osalusSalvestatav);
 
