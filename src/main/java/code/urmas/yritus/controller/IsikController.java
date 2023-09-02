@@ -115,10 +115,12 @@ public class IsikController {
         if(tyypId == 1){
             Eraisik eraisik = eraisikService.getByIsik(isik);
             eraisik.setIsik(isik);
-            System.out.println("IsikController100: " + eraisik.getId());
             model.addAttribute("eraisik", eraisik);
             return "eraisikDetail.html";
         }else{
+            Ettevote ettevote = ettevoteService.getByIsik(isik);
+            ettevote.setIsik(isik);
+            model.addAttribute("ettevote", ettevote);
             return "ettevoteDetail.html";
         }
     }
@@ -129,6 +131,17 @@ public class IsikController {
         eraisikService.saveEraisik(eraisik);
         Isik isik = eraisik.getIsik();
         isik.setNimi(eraisik.getEesnimi());
+        isikService.saveCustomer(isik);
+
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "/editettevote", method = RequestMethod.POST)
+    public String editFirma(@ModelAttribute("ettevote") Ettevote ettevote, BindingResult result) {
+
+        ettevoteService.saveEttevote(ettevote);
+        Isik isik = ettevote.getIsik();
+        isik.setNimi(ettevote.getJuriidilinenimi());
         isikService.saveCustomer(isik);
 
         return "redirect:/";

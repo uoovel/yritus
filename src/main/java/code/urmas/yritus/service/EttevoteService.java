@@ -2,6 +2,7 @@ package code.urmas.yritus.service;
 
 
 import code.urmas.yritus.model.Ettevote;
+import code.urmas.yritus.model.Isik;
 import code.urmas.yritus.repository.EttevoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,5 +17,9 @@ public class EttevoteService {
     public Ettevote saveEttevote(Ettevote ettevote) {
         Ettevote savedEttevote = ettevoteRepository.save(ettevote);
         return savedEttevote;
+    }
+
+    public Ettevote getByIsik(Isik isik) {
+        return ettevoteRepository.findOneByIsik(isik);
     }
 }
