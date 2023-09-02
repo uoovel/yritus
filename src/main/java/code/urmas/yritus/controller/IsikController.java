@@ -71,14 +71,16 @@ public class IsikController {
 
         Isik isik = osalus.getIsik();
         Isik isikSaved = null;
+        Integer osalejateArv = null;
 
 
         if(isik.getTyyp().getId() == 1){
             Eraisik eraisik = osalus.getEraisik();
-            isik.setNimi(eraisik.getEesnimi());
+            isik.setNimi(eraisik.getEesnimi() + " " + eraisik.getPerekonnanimi());
             isikSaved = isikService.saveCustomer(isik);
             eraisik.setIsik(isikSaved);
             Eraisik savedEraisik = eraisikService.saveEraisik(eraisik);
+            osalejateArv = 1;
         }
         if(isik.getTyyp().getId() == 2){
             Ettevote ettevote = osalus.getEttevote();
@@ -86,8 +88,7 @@ public class IsikController {
             isikSaved = isikService.saveCustomer(isik);
             ettevote.setIsik(isikSaved);
             Ettevote savedEttevote = ettevoteService.saveEttevote(ettevote);
-
-
+            osalejateArv = osalus.getTulijatearv();
         }
 
 
@@ -97,10 +98,16 @@ public class IsikController {
         Yritus yritus = yritusService.get(yritusId);
         Makseviis makseviis = makseviisService.get(osalus.getMakseviis().getId());
 
+
+
+        String lisainfo = osalus.getLisainfo();
+
         Osalus osalusSalvestatav = new Osalus();
         osalusSalvestatav.setYritus(yritus);
         osalusSalvestatav.setIsik(isikSaved);
         osalusSalvestatav.setMakseviis(makseviis);
+        osalusSalvestatav.setTulijatearv(osalejateArv);
+        osalusSalvestatav.setLisainfo(lisainfo);
 
         osalusService.saveOsalus(osalusSalvestatav);
 

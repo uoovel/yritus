@@ -22,4 +22,8 @@ public class OsalusService {
     public List<Osalus> getOsalussByYritus(Yritus yritus) {
         return osalusRepository.findByYritus(yritus);
     }
+
+    public void deleteAllByYritus(Yritus yritus) {
+        osalusRepository.deleteByYritus(yritus);
+    }
 }

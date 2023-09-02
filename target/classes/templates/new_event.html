@@ -8,6 +8,11 @@
 </head>
 <body>
 <div align="center">
+    <a href="/">Avaleht</a>
+    <a href="/newevent">Ürituse lisamine</a>
+
+</div>
+<div align="center">
     <div th:if="${yritus.id == null}"><h1>Loo uus üritus</h1></div>
     <div th:unless="${yritus.id == null}"><h1>Muuda üritust</h1></div>
     <br />
@@ -23,7 +28,18 @@
                         Kontrolli nimetust</p>
                 </td>
             </tr>
-
+            <tr>
+                <td>Toimumisaeg:</td>
+                <td><input type="datetime-local" th:field="*{aeg}"/></td>
+            </tr>
+            <tr>
+                <td>Koht:</td>
+                <td><input type="text" th:field="*{koht}"/></td>
+            </tr>
+            <tr>
+                <td>Lisainfo:</td>
+                <td><input type="text" th:field="*{lisainfo}"/></td>
+            </tr>
 
 
             <tr>

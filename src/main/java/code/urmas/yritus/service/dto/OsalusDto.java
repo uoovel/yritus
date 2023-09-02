@@ -10,6 +10,9 @@ public class OsalusDto {
     private Eraisik eraisik;
     private Ettevote ettevote;
 
+    private Integer tulijatearv;
+    private String lisainfo;
+
     public OsalusDto(){
 
     };
@@ -52,5 +55,21 @@ public class OsalusDto {
 
     public void setEttevote(Ettevote ettevote) {
         this.ettevote = ettevote;
+    }
+
+    public Integer getTulijatearv() {
+        return tulijatearv;
+    }
+
+    public void setTulijatearv(Integer tulijatearv) {
+        this.tulijatearv = tulijatearv;
+    }
+
+    public String getLisainfo() {
+        return lisainfo;
+    }
+
+    public void setLisainfo(String lisainfo) {
+        this.lisainfo = lisainfo;
     }
 }

@@ -21,6 +21,9 @@ public class Osalus {
     @JoinColumn(name="makseviis_id")
     private Makseviis makseviis;
 
+    private Integer tulijatearv;
+    private String lisainfo;
+
     public Osalus(){
 
     }
@@ -55,5 +58,21 @@ public class Osalus {
 
     public void setMakseviis(Makseviis makseviis) {
         this.makseviis = makseviis;
+    }
+
+    public Integer getTulijatearv() {
+        return tulijatearv;
+    }
+
+    public void setTulijatearv(Integer tulijatearv) {
+        this.tulijatearv = tulijatearv;
+    }
+
+    public String getLisainfo() {
+        return lisainfo;
+    }
+
+    public void setLisainfo(String lisainfo) {
+        this.lisainfo = lisainfo;
     }
 }

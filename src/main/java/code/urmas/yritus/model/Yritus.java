@@ -12,6 +12,10 @@ public class Yritus {
     private Long id;
     private String nimetus;
 
+    private String aeg;
+    private String koht;
+    private String lisainfo;
+
     public Yritus(){
 
     }
@@ -30,5 +34,28 @@ public class Yritus {
 
     public void setNimetus(String nimetus) {
         this.nimetus = nimetus;
+    }
+
+    public String getAeg() {
+        return aeg;
+    }
+    public void setAeg(String aeg) {
+        this.aeg = aeg;
+    }
+
+    public String getKoht() {
+        return koht;
+    }
+
+    public void setKoht(String koht) {
+        this.koht = koht;
+    }
+
+    public String getLisainfo() {
+        return lisainfo;
+    }
+
+    public void setLisainfo(String lisainfo) {
+        this.lisainfo = lisainfo;
     }
 }

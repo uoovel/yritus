@@ -9,4 +9,6 @@ import java.util.List;
 public interface OsalusRepository extends JpaRepository<Osalus, Long> {
 //järg
     List<Osalus> findByYritus(Yritus yritus);
+
+    void deleteByYritus(Yritus yritus);
 }
