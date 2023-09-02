@@ -3,6 +3,8 @@ package code.urmas.yritus.service.dto;
 import code.urmas.yritus.model.*;
 
 public class OsalusDto {
+
+    private Long id;
     private Yritus yritus;
 
     private Isik isik;
@@ -16,6 +18,14 @@ public class OsalusDto {
     public OsalusDto(){
 
     };
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Yritus getYritus() {
         return yritus;

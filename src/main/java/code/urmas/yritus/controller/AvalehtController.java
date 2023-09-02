@@ -46,6 +46,7 @@ public class AvalehtController {
         Yritus yritus = yritusService.get(id);
         List<Osalus> osalusList = osalusService.getOsalussByYritus(yritus);
         model.addAttribute("listOsalus", osalusList);
+        model.addAttribute("yritus", yritus);
         return "koikOsalejad.html";
     }
 

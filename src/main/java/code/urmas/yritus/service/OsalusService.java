@@ -26,4 +26,12 @@ public class OsalusService {
     public void deleteAllByYritus(Yritus yritus) {
         osalusRepository.deleteByYritus(yritus);
     }
+
+    public void delete(Long id) {
+        osalusRepository.deleteById(id);
+    }
+
+    public Osalus get(long id) {
+        return osalusRepository.findById(id).get();
+    }
 }

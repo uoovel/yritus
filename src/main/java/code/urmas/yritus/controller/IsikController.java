@@ -77,6 +77,7 @@ public class IsikController {
         if(isik.getTyyp().getId() == 1){
             Eraisik eraisik = osalus.getEraisik();
             isik.setNimi(eraisik.getEesnimi() + " " + eraisik.getPerekonnanimi());
+            isik.setKood(eraisik.getIsikukood());
             isikSaved = isikService.saveCustomer(isik);
             eraisik.setIsik(isikSaved);
             Eraisik savedEraisik = eraisikService.saveEraisik(eraisik);
@@ -85,6 +86,7 @@ public class IsikController {
         if(isik.getTyyp().getId() == 2){
             Ettevote ettevote = osalus.getEttevote();
             isik.setNimi(ettevote.getJuriidilinenimi());
+            isik.setKood(ettevote.getRegistrikood());
             isikSaved = isikService.saveCustomer(isik);
             ettevote.setIsik(isikSaved);
             Ettevote savedEttevote = ettevoteService.saveEttevote(ettevote);
@@ -114,42 +116,86 @@ public class IsikController {
         return "redirect:/";
     }
 
-    @RequestMapping("/vaataIsikut/{id}")
-    public String showIsikDetailForm(@PathVariable(name = "id") int id, Model model) {
-        Isik isik = isikService.get(id);
-        int tyypId = (isik.getTyyp().getId()).intValue();
+    @RequestMapping("/vaataOsalust/{id}")
+    public String showIsikDetailForm(@PathVariable(name = "id") long id, Model model) {
+        Osalus osalus = osalusService.get(id);
+        Isik isik = osalus.getIsik();
 
+        int tyypId = (isik.getTyyp().getId()).intValue();
+        OsalusDto osalusDto = new OsalusDto();
+        osalusDto.setId(id);
+        osalusDto.setMakseviis(osalus.getMakseviis());
+        osalusDto.setLisainfo(osalus.getLisainfo());
+        List<Makseviis> listMakseviis = makseviisService.listAll();
+        model.addAttribute("makseviisList" ,listMakseviis);
         if(tyypId == 1){
             Eraisik eraisik = eraisikService.getByIsik(isik);
-            eraisik.setIsik(isik);
-            model.addAttribute("eraisik", eraisik);
+            osalusDto.setEraisik(eraisik);
+            model.addAttribute("osalus", osalusDto);
             return "eraisikDetail.html";
         }else{
             Ettevote ettevote = ettevoteService.getByIsik(isik);
-            ettevote.setIsik(isik);
-            model.addAttribute("ettevote", ettevote);
+            osalusDto.setEttevote(ettevote);
+            model.addAttribute("osalus", osalusDto);
             return "ettevoteDetail.html";
         }
+
     }
 
-    @RequestMapping(value = "/editeraisik", method = RequestMethod.POST)
-    public String editCustomer(@ModelAttribute("eraisik") Eraisik eraisik, BindingResult result) {
+    @RequestMapping(value = "/editeraisikuosalus", method = RequestMethod.POST)
+    public String editCustomer(@ModelAttribute("osalus") OsalusDto osalus,
+                               BindingResult result) {
+        Osalus osalusreferents = osalusService.get(osalus.getId());
+        Isik isik = osalusreferents.getIsik();
 
-        eraisikService.saveEraisik(eraisik);
-        Isik isik = eraisik.getIsik();
-        isik.setNimi(eraisik.getEesnimi());
-        isikService.saveCustomer(isik);
+        Eraisik eraisik = eraisikService.getByIsik(isik);
+        eraisik.setEesnimi(osalus.getEraisik().getEesnimi());
+        eraisik.setPerekonnanimi(osalus.getEraisik().getPerekonnanimi());
+        eraisik.setIsikukood(osalus.getEraisik().getIsikukood());
+        Eraisik eraisikSaved = eraisikService.saveEraisik(eraisik);
+
+        isik.setNimi(eraisikSaved.getEesnimi() + " " + eraisikSaved.getPerekonnanimi());
+        isik.setKood(eraisikSaved.getIsikukood());
+        Isik isikSaved = isikService.saveCustomer(isik);
+        Osalus osalusUus = new Osalus();
+        osalusUus.setId(osalus.getId());
+        osalusUus.setYritus(osalusreferents.getYritus());
+        osalusUus.setIsik(isikSaved);
+        osalusUus.setMakseviis(osalus.getMakseviis());
+        osalusUus.setLisainfo(osalus.getLisainfo());
+        osalusService.saveOsalus(osalusUus);
 
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/editettevote", method = RequestMethod.POST)
-    public String editFirma(@ModelAttribute("ettevote") Ettevote ettevote, BindingResult result) {
+    @RequestMapping(value = "/editettevotteosalus", method = RequestMethod.POST)
+    public String editFirma(@ModelAttribute("osalus") OsalusDto osalus, BindingResult result) {
 
-        ettevoteService.saveEttevote(ettevote);
-        Isik isik = ettevote.getIsik();
-        isik.setNimi(ettevote.getJuriidilinenimi());
-        isikService.saveCustomer(isik);
+        Osalus osalusreferents = osalusService.get(osalus.getId());
+        Isik isik = osalusreferents.getIsik();
+
+        Ettevote ettevote = ettevoteService.getByIsik(isik);
+        ettevote.setJuriidilinenimi(osalus.getEttevote().getJuriidilinenimi());
+        ettevote.setRegistrikood(osalus.getEttevote().getRegistrikood());
+        Ettevote ettevoteSaved = ettevoteService.saveEttevote(ettevote);
+
+        isik.setNimi(ettevoteSaved.getJuriidilinenimi());
+        isik.setKood(ettevoteSaved.getRegistrikood());
+        Isik isikSaved = isikService.saveCustomer(isik);
+        Osalus osalusUus = new Osalus();
+        osalusUus.setId(osalus.getId());
+        osalusUus.setYritus(osalusreferents.getYritus());
+        osalusUus.setIsik(isikSaved);
+        osalusUus.setMakseviis(osalus.getMakseviis());
+        osalusUus.setLisainfo(osalus.getLisainfo());
+        osalusService.saveOsalus(osalusUus);
+
+        return "redirect:/";
+    }
+    @RequestMapping("/deleteOsalus/{id}")
+    public String deleteIsik(@PathVariable(name = "id") Long id) {
+
+        osalusService.delete(id);
 
         return "redirect:/";
     }

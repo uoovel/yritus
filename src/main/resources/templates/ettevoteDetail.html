@@ -16,15 +16,42 @@
     <div><h1>Osavõtja info</h1></div>
 
     <br />
-    <form action="#" th:action="@{/editettevote}" th:object="${ettevote}"
+    <form action="#" th:action="@{/editettevotteosalus}" th:object="${osalus}"
           method="post">
-        <input type="hidden" th:field="*{id}" th:value="${ettevote.id}" />
-        <input type="hidden" th:field="*{isik}" th:value="${ettevote.isik}"/>
+        <input type="hidden" th:field="*{id}" th:value="${osalus.id}" />
+        <input type="hidden" th:field="*{isik}" th:value="${osalus.isik}"/>
         <table border="0" cellpadding="10">
             <tr>
                 <td>Juriidiline nimi:</td>
-                <td><input type="text" th:field="*{juriidilinenimi}" />
+                <td><input type="text" th:field="*{ettevote.juriidilinenimi}" />
+                </td>
+            </tr>
 
+            <tr>
+                <td>Registrikood:</td>
+                <td><input type="text" th:field="*{ettevote.registrikood}" />
+                </td>
+            </tr>
+            <tr>
+                <td>Makseviis:</td>
+                <td>
+                    <select th:field="*{makseviis.id}" id="makseviis" name="makseviis">
+                        <option th:utext="${osalus.makseviis.nimetus}" th:value="${osalus.makseviis.id}"/>
+
+                        <th:block th:each="makseviis: ${makseviisList}">
+
+                            <option th:utext="${makseviis.nimetus}" th:value="${makseviis.id}" />
+
+                        </th:block>
+                    </select>
+                </td>
+            </tr>
+
+
+
+            <tr>
+                <td>Lisainfo:</td>
+                <td><input type="text" th:field="*{lisainfo}" />
                 </td>
             </tr>
 
