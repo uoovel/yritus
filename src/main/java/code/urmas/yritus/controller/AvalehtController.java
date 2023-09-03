@@ -8,12 +8,16 @@ import code.urmas.yritus.service.OsalusService;
 import code.urmas.yritus.service.StartService;
 import code.urmas.yritus.service.TyypService;
 import code.urmas.yritus.service.YritusService;
+import code.urmas.yritus.service.dto.YritusDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -37,7 +41,42 @@ public class AvalehtController {
         }
 
         List<Yritus> listYritused = yritusService.listAll();
-        model.addAttribute("listYritused", listYritused);
+
+        List<YritusDto> listYritusDtoTulevik = new ArrayList<>();
+        List<YritusDto> listYritusDtoMinevik = new ArrayList<>();
+        Timestamp timestampNow = Timestamp.valueOf(LocalDateTime.now());
+        Long nowLong = timestampNow.getTime();
+        //System.out.println("AvalehtController100: " + dateTime);
+        //Timestamp aegPraegu =
+
+        for (int i = 0; i < listYritused.size(); i++) {
+            Yritus yritus = listYritused.get(i);
+            Timestamp yrituseAeg = yritus.getAegts();
+            YritusDto yritusDto = new YritusDto();
+            yritusDto.setId(yritus.getId());
+            yritusDto.setNimetus(yritus.getNimetus());
+            yritusDto.setAeg(yritus.getAeg());
+            yritusDto.setKoht(yritus.getKoht());
+            yritusDto.setLisainfo(yritus.getLisainfo());
+            yritusDto.setAegts(yritus.getAegts());
+            try{
+                yritusDto.setOsalejaid(osalusService.summOsalejad(yritus));
+            }catch (Exception n){
+                yritusDto.setOsalejaid(0);
+            }
+
+
+            if(yrituseAeg.getTime() > nowLong){
+                System.out.println("AvalehtController200: " + yrituseAeg);
+                listYritusDtoTulevik.add(yritusDto);
+            } else {
+                listYritusDtoMinevik.add(yritusDto);
+            }
+
+        }
+        model.addAttribute("listYritusMinevik", listYritusDtoMinevik);
+
+        model.addAttribute("listYritusTulevik", listYritusDtoTulevik);
         return "index.html";
     }
 

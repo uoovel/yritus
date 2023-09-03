@@ -17,4 +17,8 @@ public class TyypService {
     public List<Tyyp> listAll() {
         return tyypRepository.findAll();
     }
+
+    public Tyyp getById(Long i) {
+        return tyypRepository.findById(i).get();
+    }
 }

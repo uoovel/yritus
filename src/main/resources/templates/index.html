@@ -12,7 +12,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link th:href="@{/styles/cssandjs/main.css}" rel="stylesheet" />
 </head>
-<body> <h1>Ürituste rakendus</h1>
+<body onload="peidavaljad()"> <h1>Ürituste rakendus</h1>
 <div align="center">
     <a href="/">Avaleht</a>
     <a href="/newevent">Ürituse lisamine</a>
@@ -24,6 +24,42 @@
     <h1>Ürituste loend</h1>
 
     <br/><br/>
+
+    <a>
+        <input type="radio" id="vaataminevik" value="vaataminevik"  onclick="clickAction()"/>
+        <label  for="vaataminevik">Vaata ürituste ajalugu</label>
+    </a>
+    <div id="minevikuYritused">
+        <a>Mineviku üritused:</a>
+        <table border="1" cellpadding="10">
+            <thead>
+            <tr>
+                <th>Nimetus</th>
+                <th>Toimumisaeg</th>
+                <th>Koht</th>
+                <th>Osalejaid</th>
+                <th>Tegevus</th>
+            </tr>
+            </thead>
+            <tr th:each="yritus : ${listYritusMinevik}">
+
+                <td>
+                    <a th:href="@{'/koikOsalejad/' + ${yritus.id}}" th:text="${yritus.nimetus}">Nimetus</a>
+                </td>
+                <td>
+                    <a type="datetime-local" th:text="${yritus.aeg}">Toimumisaeg</a>
+                </td>
+                <td th:text="${yritus.koht}">Koht</td>
+                <td th:text="${yritus.osalejaid}">Osalejaid</td>
+                <td>
+                    <a th:href="@{'/vormOsaleja/' + ${yritus.id}}">Osavõtjad</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <br>
+    <a>Tuleviku üritused: </a>
+    <div>
     <table border="1" cellpadding="10">
         <thead>
         <tr>
@@ -31,11 +67,11 @@
             <th>Nimetus</th>
             <th>Toimumisaeg</th>
             <th>Koht</th>
+            <th>Osalejaid</th>
             <th>Tegevus</th>
         </tr>
         </thead>
-        <tbody>
-        <tr th:each="yritus : ${listYritused}">
+        <tr th:each="yritus : ${listYritusTulevik}">
 
             <td>
                 <a th:href="@{'/koikOsalejad/' + ${yritus.id}}" th:text="${yritus.nimetus}">Nimetus</a>
@@ -44,17 +80,24 @@
                 <a type="datetime-local" th:text="${yritus.aeg}">Toimumisaeg</a>
             </td>
             <td th:text="${yritus.koht}">Koht</td>
-
+            <td th:text="${yritus.osalejaid}">Osalejaid</td>
             <td>
                 <a th:href="@{'/vormOsaleja/' + ${yritus.id}}">Osavõtjad</a>
                 &nbsp;&nbsp;&nbsp;
                 <a th:href="@{'/deleteYritus/' + ${yritus.id}}">Kustuta</a>
             </td>
         </tr>
-        </tbody>
     </table>
+    </div>
 </div>
-
+<script>
+    function peidavaljad(){
+        document.getElementById("minevikuYritused").style.display = "none";
+    }
+    function clickAction(){
+        document.getElementById("minevikuYritused").style.display = "initial";
+    }
+</script>
 </body>
 </html>
 

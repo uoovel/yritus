@@ -1,28 +1,15 @@
-package code.urmas.yritus.model;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+package code.urmas.yritus.service.dto;
 
 import java.sql.Timestamp;
 
-@Entity
-public class Yritus {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class YritusDto {
     private Long id;
     private String nimetus;
-
     private String aeg;
     private String koht;
     private String lisainfo;
-
     private Timestamp aegts;
-
-    public Yritus(){
-
-    }
+    private int osalejaid;
 
     public Long getId() {
         return id;
@@ -43,6 +30,7 @@ public class Yritus {
     public String getAeg() {
         return aeg;
     }
+
     public void setAeg(String aeg) {
         this.aeg = aeg;
     }
@@ -69,5 +57,13 @@ public class Yritus {
 
     public void setAegts(Timestamp aegts) {
         this.aegts = aegts;
+    }
+
+    public int getOsalejaid() {
+        return osalejaid;
+    }
+
+    public void setOsalejaid(int osalejaid) {
+        this.osalejaid = osalejaid;
     }
 }

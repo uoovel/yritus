@@ -9,6 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+
 @Controller
 public class YritusController {
     @Autowired
@@ -28,6 +31,14 @@ public class YritusController {
     public String salvestaYritus(
             @ModelAttribute("yritus") Yritus yritus
     ){
+        String yrituseAeg = yritus.getAeg();
+        String kuupaev = yrituseAeg.substring(0,10);
+        String kell = yrituseAeg.substring(11,16);
+        String yrituseAeg2 = kuupaev + " " + kell + ":00";
+        System.out.println("YritusController100: " + yrituseAeg);
+        System.out.println("YritusController200: " + yrituseAeg2);
+        Timestamp aegts = Timestamp.valueOf(yrituseAeg2);
+        yritus.setAegts(aegts);
         yritusService.save(yritus);
         return "redirect:/";
     }

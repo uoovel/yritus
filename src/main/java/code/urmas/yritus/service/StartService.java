@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+
 @Service
 @Transactional
 public class StartService {
@@ -38,7 +40,12 @@ public class StartService {
         Makseviis makseviis2Saved = makseviisRepository.save(makseviis2);
 
         Yritus yritus = new Yritus();
-        yritus.setNimetus("Terminaatori kontsert");
+        yritus.setNimetus("Jaanipäev");
+        String aegString = "2023-06-23 18:30:00";
+        yritus.setAegts(Timestamp.valueOf(aegString));
+        yritus.setAeg(aegString);
+        yritus.setKoht("Piirsalu");
+        yritus.setLisainfo("Pilet 5E");
         Yritus yritusSaved = yritusRepository.save(yritus);
 
         String juriidilineNimi = "ABB AS";
@@ -55,6 +62,7 @@ public class StartService {
         osalus.setYritus(yritusSaved);
         osalus.setIsik(isikSaved);
         osalus.setMakseviis(makseviis2Saved);
+        osalus.setTulijatearv(5);
         osalusRepository.save(osalus);
     }
 

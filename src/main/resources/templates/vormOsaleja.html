@@ -34,14 +34,37 @@
         <input type="hidden" th:field="*{yritus.id}" th:value="${osalus.yritus.id}" />
 
 
+
+
         <a th:each="ty : ${listTyyp}">
             <input type="radio" th:field="*{isik.tyyp}" th:value="${ty.id}" th:onclick="clickAction(value)"/>
             <label th:for="${#ids.prev('isik.tyyp')}" th:text="${ty.nimetus}">Wireframe</label>
         </a>
+        <div id="ololera">
+        <table>
+            <tr>
+                <td>Olemasolev isik:</td>
+                <td>
+                    <select th:field="*{eraisik.isik.id}" id="eraisik" name="isik" onchange="eraisikListist(value)">
+                        <option value="0" th:disabled="disabled">--palun vali--</option>
+                        <option value="0">Ei leidu</option>
+
+                        <th:block th:each="isik: ${isikListEra}">
+
+                            <option th:utext="${isik.nimi}" th:value="${isik.id}" />
+
+                        </th:block>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        </div>
 
 
         <div id="eraisikuvorm">
             <table border="0" cellpadding="10" >
+
+
                 <tr>
                     <td>Eesnimi:</td>
                     <td><input type="text" th:field="*{eraisik.eesnimi}" />
@@ -61,8 +84,30 @@
             </table>
         </div>
 
+        <div id="ololett">
+            <table>
+                <tr>
+                    <td>Olemasolev isik:</td>
+                    <td>
+                        <select th:field="*{ettevote.isik.id}" id="ettevote" name="isik" onchange="ettevoteListist(value)">
+                            <option value="0" th:disabled="disabled">--palun vali--</option>
+                            <option value="0">Ei leidu</option>
+
+                            <th:block th:each="isik: ${isikListEtt}">
+
+                                <option th:utext="${isik.nimi}" th:value="${isik.id}" />
+
+                            </th:block>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
         <div id="firmavorm">
             <table border="0" cellpadding="10" >
+
                 <tr>
                     <td>Juriidiline Nimi:</td>
                     <td><input type="text" th:field="*{ettevote.juriidilinenimi}" />
@@ -73,16 +118,18 @@
                     <td><input type="text" th:field="*{ettevote.registrikood}" />
                     </td>
                 </tr>
-                <tr>
-                    <td>Tulijate arv:</td>
-                    <td><input type="text" th:field="*{tulijatearv}" />
-                    </td>
-                </tr>
+
 
 
             </table>
         </div>
-
+        <div id="tulijaid">
+            <tr>
+                <td>Tulijate arv:</td>
+                <td><input type="text" th:field="*{tulijatearv}" />
+                </td>
+            </tr>
+        </div>
 
 
         <div>
@@ -92,7 +139,7 @@
                     <td>Makseviis:</td>
                     <td>
                         <select th:field="*{makseviis.id}" id="makseviis" name="makseviis">
-                            <option value="0" th:disabled="disabled">--please select--</option>
+                            <option value="0" th:disabled="disabled">--palun vali--</option>
 
                             <th:block th:each="makseviis: ${makseviisList}">
 
@@ -122,15 +169,36 @@
         if(value == 1){
             document.getElementById("firmavorm").style.display = "none";
             document.getElementById("eraisikuvorm").style.display = "initial";
+            document.getElementById("ololera").style.display = "initial";
+            document.getElementById("tulijaid").style.display = "none";
         }
         if(value == 2){
             document.getElementById("eraisikuvorm").style.display = "none";
             document.getElementById("firmavorm").style.display = "initial"
+            document.getElementById("ololett").style.display = "initial";
+            document.getElementById("tulijaid").style.display = "initial";
         }
     }
     function peidavaljad(){
         document.getElementById("firmavorm").style.display = "none";
         document.getElementById("eraisikuvorm").style.display = "none";
+        document.getElementById("ololera").style.display = "none";
+        document.getElementById("ololett").style.display = "none";
+        document.getElementById("tulijaid").style.display = "none";
+    }
+    function eraisikListist(value){
+        if(value > 0){
+            document.getElementById("eraisikuvorm").style.display = "none";
+        } else {
+            document.getElementById("eraisikuvorm").style.display = "initial";
+        }
+    }
+    function ettevoteListist(value){
+        if(value > 0){
+            document.getElementById("firmavorm").style.display = "none";
+        } else {
+            document.getElementById("firmavorm").style.display = "initial";
+        }
     }
 </script>
 </body>

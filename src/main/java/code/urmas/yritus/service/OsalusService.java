@@ -34,4 +34,8 @@ public class OsalusService {
     public Osalus get(long id) {
         return osalusRepository.findById(id).get();
     }
+
+    public int summOsalejad(Yritus yritus) {
+        return osalusRepository.sumOsalejadByYritus(yritus);
+    }
 }
