@@ -3,7 +3,7 @@ package code.urmas.yritus.controller;
 import code.urmas.yritus.model.Yritus;
 import code.urmas.yritus.service.OsalusService;
 import code.urmas.yritus.service.YritusService;
-import code.urmas.yritus.service.dto.YritusDto;
+import code.urmas.yritus.dto.YritusDto;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

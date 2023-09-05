@@ -1,4 +1,4 @@
-package code.urmas.yritus.service.dto;
+package code.urmas.yritus.dto;
 
 import code.urmas.yritus.model.*;
 import jakarta.validation.constraints.Pattern;

@@ -2,7 +2,7 @@ package code.urmas.yritus.controller;
 
 import code.urmas.yritus.model.*;
 import code.urmas.yritus.service.*;
-import code.urmas.yritus.service.dto.OsalusDto;
+import code.urmas.yritus.dto.OsalusDto;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
