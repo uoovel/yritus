@@ -19,6 +19,7 @@ public class OsalusDto {
     private Ettevote ettevote;
 
     private Integer tulijatearv;
+
     private String lisainfo;
 
     public OsalusDto(){

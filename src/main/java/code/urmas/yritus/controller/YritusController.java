@@ -3,10 +3,13 @@ package code.urmas.yritus.controller;
 import code.urmas.yritus.model.Yritus;
 import code.urmas.yritus.service.OsalusService;
 import code.urmas.yritus.service.YritusService;
+import code.urmas.yritus.service.dto.YritusDto;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
@@ -21,7 +24,7 @@ public class YritusController {
 
     @RequestMapping("/newevent")
     public String uusyritus(Model model){
-        Yritus yritus = new Yritus();
+        YritusDto yritus = new YritusDto();
         model.addAttribute("yritus", yritus);
         return "new_event.html";
     }
@@ -29,16 +32,27 @@ public class YritusController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String salvestaYritus(
-            @ModelAttribute("yritus") Yritus yritus
+            @Valid @ModelAttribute("yritus") YritusDto yritusDto,
+            BindingResult result,
+            Model model
     ){
-        String yrituseAeg = yritus.getAeg();
+        if(result.hasErrors()){
+            model.addAttribute("yritus", yritusDto);
+            return "new_event.html";
+        }
+        String yrituseAeg = yritusDto.getAeg();
         String kuupaev = yrituseAeg.substring(0,10);
         String kell = yrituseAeg.substring(11,16);
         String yrituseAeg2 = kuupaev + " " + kell + ":00";
         System.out.println("YritusController100: " + yrituseAeg);
         System.out.println("YritusController200: " + yrituseAeg2);
         Timestamp aegts = Timestamp.valueOf(yrituseAeg2);
+        Yritus yritus = new Yritus();
+        yritus.setNimetus(yritusDto.getNimetus());
         yritus.setAegts(aegts);
+        yritus.setKoht(yritusDto.getKoht());
+        yritus.setLisainfo(yritusDto.getLisainfo());
+        yritus.setAeg(yritusDto.getAeg());
         yritusService.save(yritus);
         return "redirect:/";
     }

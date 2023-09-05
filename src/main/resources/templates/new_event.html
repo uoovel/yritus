@@ -36,10 +36,14 @@
                 <td>Koht:</td>
                 <td><input type="text" th:field="*{koht}"/></td>
             </tr>
+            <p th:if="${#fields.hasErrors('lisainfo')}"
+               th:errorclass="error" th:errors="*{lisainfo}">
+                Check Isikukood</p>
             <tr>
                 <td>Lisainfo:</td>
                 <td><input type="text" th:field="*{lisainfo}"/></td>
             </tr>
+
 
 
             <tr>

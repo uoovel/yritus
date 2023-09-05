@@ -1,5 +1,7 @@
 package code.urmas.yritus.service.dto;
 
+import org.hibernate.validator.constraints.Length;
+
 import java.sql.Timestamp;
 
 public class YritusDto {
@@ -7,6 +9,8 @@ public class YritusDto {
     private String nimetus;
     private String aeg;
     private String koht;
+
+    @Length(min=0, max=1000, message="{Tekst liiga pikk!}")
     private String lisainfo;
     private Timestamp aegts;
     private int osalejaid;
