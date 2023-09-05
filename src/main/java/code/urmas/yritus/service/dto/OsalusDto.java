@@ -1,6 +1,8 @@
 package code.urmas.yritus.service.dto;
 
 import code.urmas.yritus.model.*;
+import jakarta.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.Length;
 
 public class OsalusDto {
 
@@ -10,6 +12,10 @@ public class OsalusDto {
     private Isik isik;
     private Makseviis makseviis;
     private Eraisik eraisik;
+
+    @Length(min=11, max=11, message="{Isikukoodi pikkus?}")
+    @Pattern(regexp = "(1|2|3|4)[0-9]{10}", message = "{Isikukoodi muster?}")
+    private String isikukood;
     private Ettevote ettevote;
 
     private Integer tulijatearv;
@@ -81,5 +87,13 @@ public class OsalusDto {
 
     public void setLisainfo(String lisainfo) {
         this.lisainfo = lisainfo;
+    }
+
+    public String getIsikukood() {
+        return isikukood;
+    }
+
+    public void setIsikukood(String isikukood) {
+        this.isikukood = isikukood;
     }
 }

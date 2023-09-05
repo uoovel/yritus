@@ -3,6 +3,7 @@ package code.urmas.yritus.controller;
 import code.urmas.yritus.model.*;
 import code.urmas.yritus.service.*;
 import code.urmas.yritus.service.dto.OsalusDto;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Optional;
@@ -66,15 +68,37 @@ public class IsikController {
     }
 
     @RequestMapping(value = "/savecustomer", method = RequestMethod.POST)
-    public String saveCustomer(@ModelAttribute("osalus") OsalusDto osalus, BindingResult result) {
-        if(result.hasErrors()) {
-            return "vormOsaleja.html";
-        }
-        Long eraisikId = osalus.getEraisik().getIsik().getId();
-        Long ettevoteId = osalus.getEttevote().getIsik().getId();
+    public String saveCustomer(
+            @Valid @ModelAttribute("osalus") OsalusDto osalus,
+            BindingResult result, Model model) {
+
+
+
+
+        Long eraisikId = Long.valueOf(0);
+        Long ettevoteId = Long.valueOf(0);
         Isik isik = osalus.getIsik();
         Isik isikSaved = null;
         Boolean olemasolev = false;
+        Boolean oneraisik = false;
+        Boolean onettevote = false;
+        if(isik.getTyyp().getId() == 1){
+            oneraisik = true;
+            try{
+                eraisikId = osalus.getEraisik().getIsik().getId();
+            }catch (Exception e){
+
+            }
+
+        }
+        if(isik.getTyyp().getId() == 2){
+            onettevote = true;
+            try{
+                ettevoteId = osalus.getEttevote().getIsik().getId();
+            }catch (Exception e){
+
+            }
+        }
         if(eraisikId != 0){
             isik = isikService.get(eraisikId);
             isikSaved = isik;
@@ -87,22 +111,39 @@ public class IsikController {
         }
 
 
+        if(result.hasErrors() && !olemasolev && oneraisik) {
+            System.out.println("saveCustomer100: " + result);
+            model.addAttribute("veaga", "jah");
+            model.addAttribute("osalus", osalus);
+            List<Tyyp> listTyyp = tyypService.listAll();
+            model.addAttribute("listTyyp" ,listTyyp);
+
+            List<Makseviis> listMakseviis = makseviisService.listAll();
+            model.addAttribute("makseviisList" ,listMakseviis);
+            return "vormOsaleja.html";
+        }
+
+
+
+
+
 
 
         Integer osalejateArv = null;
 
 
-        if(isik.getTyyp().getId() == 1 && !olemasolev){
+        if(oneraisik && !olemasolev){
             Eraisik eraisik = osalus.getEraisik();
             isik.setNimi(eraisik.getEesnimi() + " " + eraisik.getPerekonnanimi());
-            isik.setKood(eraisik.getIsikukood());
+            isik.setKood(osalus.getIsikukood());
             isikSaved = isikService.saveCustomer(isik);
             eraisik.setIsik(isikSaved);
+            eraisik.setIsikukood(osalus.getIsikukood());
             Eraisik savedEraisik = eraisikService.saveEraisik(eraisik);
 
         }
-        if(isik.getTyyp().getId() == 2 && !olemasolev){
-            System.out.println("saveCustomer: " + isik.getId());
+        if(onettevote && !olemasolev){
+            //System.out.println("saveCustomer: " + isik.getId());
             Ettevote ettevote = osalus.getEttevote();
             isik.setNimi(ettevote.getJuriidilinenimi());
             isik.setKood(ettevote.getRegistrikood());

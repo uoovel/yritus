@@ -1,6 +1,7 @@
 package code.urmas.yritus.model;
 
 import jakarta.persistence.*;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 public class Eraisik {
@@ -9,8 +10,8 @@ public class Eraisik {
     private Long id;
     private String Eesnimi;
     private String Perekonnanimi;
-    private String Isikukood;
 
+    private String Isikukood;
     @OneToOne
     @JoinColumn(name="isik_id")
     private Isik isik;

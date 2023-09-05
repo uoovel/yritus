@@ -1,3 +1,4 @@
+<!--https://www.baeldung.com/thymeleaf-js-function-call-->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
@@ -5,8 +6,69 @@
     <meta charset="utf-8" />
     <title>Lisa uus osaleja</title>
     <link th:href="@{/styles/cssandjs/main.css}" rel="stylesheet" />
+    <script>
+        //var veaga = 2;
+
+        function clickRadioAction(value){
+            if(value == 1){
+                document.getElementById("firmavorm").style.display = "none";
+                document.getElementById("eraisikuvorm").style.display = "initial";
+                document.getElementById("ololera").style.display = "initial";
+                document.getElementById("ololett").style.display = "none";
+                document.getElementById("tulijaid").style.display = "none";
+                document.getElementById("ettevote").value = 0;
+                document.getElementById("eraisik").value = 0;
+            }
+            if(value == 2){
+                document.getElementById("eraisikuvorm").style.display = "none";
+                document.getElementById("firmavorm").style.display = "initial"
+                document.getElementById("ololera").style.display = "none";
+                document.getElementById("ololett").style.display = "initial";
+                document.getElementById("tulijaid").style.display = "initial";
+                document.getElementById("eraisik").value = 0;
+                document.getElementById("ettevote").value = 0;
+            }
+        }
+
+
+        function peidavaljad(veaga){
+
+            if(veaga != "jah"){
+                document.getElementById("firmavorm").style.display = "none";
+                document.getElementById("eraisikuvorm").style.display = "none";
+                document.getElementById("ololera").style.display = "none";
+                document.getElementById("ololett").style.display = "none";
+                document.getElementById("tulijaid").style.display = "none";
+            }
+            if(veaga == "jah"){
+                document.getElementById("firmavorm").style.display = "none";
+                document.getElementById("ololera").style.display = "none";
+                document.getElementById("ololett").style.display = "none";
+                document.getElementById("tulijaid").style.display = "none";
+            }
+        }
+
+        function eraisikListist(value){
+            if(value > 0){
+                document.getElementById("eraisikuvorm").style.display = "none";
+            } else {
+                document.getElementById("eraisikuvorm").style.display = "initial";
+            }
+        }
+        function ettevoteListist(value){
+            if(value > 0){
+                document.getElementById("firmavorm").style.display = "none";
+            } else {
+                document.getElementById("firmavorm").style.display = "initial";
+            }
+        }
+
+    </script>
 </head>
-<body onload="peidavaljad()">
+<body th:onload="peidavaljad([[${veaga}]])">
+
+
+
 <div align="center">
     <a href="/">Avaleht</a>
     <a href="/newevent">Ürituse lisamine</a>
@@ -37,7 +99,7 @@
 
 
         <a th:each="ty : ${listTyyp}">
-            <input type="radio" th:field="*{isik.tyyp}" th:value="${ty.id}" th:onclick="clickAction(value)"/>
+            <input type="radio" th:field="*{isik.tyyp}" th:value="${ty.id}" th:onclick="clickRadioAction(value)"/>
             <label th:for="${#ids.prev('isik.tyyp')}" th:text="${ty.nimetus}">Wireframe</label>
         </a>
         <div id="ololera">
@@ -62,9 +124,9 @@
 
 
         <div id="eraisikuvorm">
-            <table border="0" cellpadding="10" >
 
 
+            <table>
                 <tr>
                     <td>Eesnimi:</td>
                     <td><input type="text" th:field="*{eraisik.eesnimi}" />
@@ -75,13 +137,22 @@
                     <td><input type="text" th:field="*{eraisik.perekonnanimi}" />
                     </td>
                 </tr>
+
                 <tr>
                     <td>Isikukood:</td>
-                    <td><input type="text" th:field="*{eraisik.isikukood}" />
+                    <td><input type="text" th:field="*{isikukood}"/>
+
                     </td>
                 </tr>
+                <p th:if="${#fields.hasErrors('isikukood')}"
+                   th:errorclass="error" th:errors="*{isikukood}">
+                    Check Isikukood</p>
 
             </table>
+
+
+
+
         </div>
 
         <div id="ololett">
@@ -164,42 +235,6 @@
 
     </form>
 </div>
-<script>
-    function clickAction(value){
-        if(value == 1){
-            document.getElementById("firmavorm").style.display = "none";
-            document.getElementById("eraisikuvorm").style.display = "initial";
-            document.getElementById("ololera").style.display = "initial";
-            document.getElementById("tulijaid").style.display = "none";
-        }
-        if(value == 2){
-            document.getElementById("eraisikuvorm").style.display = "none";
-            document.getElementById("firmavorm").style.display = "initial"
-            document.getElementById("ololett").style.display = "initial";
-            document.getElementById("tulijaid").style.display = "initial";
-        }
-    }
-    function peidavaljad(){
-        document.getElementById("firmavorm").style.display = "none";
-        document.getElementById("eraisikuvorm").style.display = "none";
-        document.getElementById("ololera").style.display = "none";
-        document.getElementById("ololett").style.display = "none";
-        document.getElementById("tulijaid").style.display = "none";
-    }
-    function eraisikListist(value){
-        if(value > 0){
-            document.getElementById("eraisikuvorm").style.display = "none";
-        } else {
-            document.getElementById("eraisikuvorm").style.display = "initial";
-        }
-    }
-    function ettevoteListist(value){
-        if(value > 0){
-            document.getElementById("firmavorm").style.display = "none";
-        } else {
-            document.getElementById("firmavorm").style.display = "initial";
-        }
-    }
-</script>
+
 </body>
 </html>
