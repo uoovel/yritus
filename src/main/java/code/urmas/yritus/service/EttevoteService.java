@@ -18,7 +18,6 @@ public class EttevoteService {
         Ettevote savedEttevote = ettevoteRepository.save(ettevote);
         return savedEttevote;
     }
-
     public Ettevote getByIsik(Isik isik) {
         return ettevoteRepository.findOneByIsik(isik);
     }

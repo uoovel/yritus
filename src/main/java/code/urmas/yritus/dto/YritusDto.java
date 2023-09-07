@@ -6,7 +6,10 @@ import java.sql.Timestamp;
 
 public class YritusDto {
     private Long id;
+    @Length(min=1, max=100, message="{Kontrolli nimetust!}")
     private String nimetus;
+
+    @Length(min=10, max=20, message="{Kontrolli toimumisaega!}")
     private String aeg;
     private String koht;
 

@@ -40,18 +40,13 @@ public class IsikController {
     @RequestMapping("/vormOsaleja/{id}")
     public String showOsalejadForm(@PathVariable(name = "id") int id, Model model) {
         Yritus yritus = yritusService.get(id);
-
-
         OsalusDto osalusDto = new OsalusDto();
-
         osalusDto.setYritusid((long) id);
         osalusDto.setYritusenimetus(yritus.getNimetus());
         osalusDto.setYrituseaeg(yritus.getAeg());
         osalusDto.setYritusekoht(yritus.getKoht());
-
         Isik isik = new Isik();
-        //isik.setId(Long.valueOf(-1));
-        osalusDto.setIsik(isik);
+        //osalusDto.setIsik(isik);
         //Eraisik
         Tyyp tyyp = tyypService.getById(Long.valueOf(1));
         List<Isik> listIsikEra = isikService.listByTyyp(tyyp);
@@ -59,16 +54,11 @@ public class IsikController {
         tyyp = tyypService.getById(Long.valueOf(2));
         List<Isik> listIsikEtt = isikService.listByTyyp(tyyp);
         model.addAttribute("isikListEtt" ,listIsikEtt);
-
         model.addAttribute("osalus", osalusDto);
-        //model.addAttribute("isik", isik);
-
         List<Tyyp> listTyyp = tyypService.listAll();
         model.addAttribute("listTyyp" ,listTyyp);
-
         List<Makseviis> listMakseviis = makseviisService.listAll();
         model.addAttribute("makseviisList" ,listMakseviis);
-
         return "vormOsaleja.html";
     }
 
@@ -78,12 +68,7 @@ public class IsikController {
             BindingResult result, Model model,
             HttpServletRequest request) {
 
-
-        String contType = request.getContentType();
-        //System.out.println("saveCustomer100: " + contType);
-        //System.out.println("Isikukood:" + osalus.getIsikukood());
-
-
+        //String contType = request.getContentType();
         Long eraisikId = Long.valueOf(0);
         Long ettevoteId = Long.valueOf(0);
         Isik isik = new Isik();
@@ -96,102 +81,47 @@ public class IsikController {
         if(osalus.getIsikutyypid() == 1){
             oneraisik = true;
             try{
-                eraisikId = osalus.getEraisik().getIsik().getId();
+                                //eraisikId = osalus.getEraisik().getIsik().getId();
+                eraisikId = osalus.getEraisikid();
+                //System.out.println("IsikController100: " + eraisikId);
+                if(eraisikId != 0){
+                    isik = isikService.get(eraisikId);
+                    isikSaved = isik;
+                    olemasolev = true;
+                }
             }catch (Exception e){
 
             }
-
         }
+
         if(osalus.getIsikutyypid() == 2){
             onettevote = true;
             try{
-                ettevoteId = osalus.getEttevote().getIsik().getId();
+                ettevoteId = osalus.getEttevoteid();
+                //System.out.println("IsikController200: " + ettevoteId);
+                if(ettevoteId != 0){
+                    isik = isikService.get(ettevoteId);
+                    isikSaved = isik;
+                    olemasolev = true;
+                }
             }catch (Exception e){
 
             }
         }
-        if(eraisikId != 0){
-            isik = isikService.get(eraisikId);
-            isikSaved = isik;
-            olemasolev = true;
-        }
-        if(ettevoteId != 0){
-            isik = isikService.get(ettevoteId);
-            isikSaved = isik;
-            olemasolev = true;
-        }
-
 
         if(result.hasErrors() && !olemasolev && oneraisik) {
-            System.out.println("saveCustomer100: " + result);
             model.addAttribute("veaga", "jah");
             model.addAttribute("osalus", osalus);
             List<Tyyp> listTyyp = tyypService.listAll();
             model.addAttribute("listTyyp" ,listTyyp);
-
             List<Makseviis> listMakseviis = makseviisService.listAll();
             model.addAttribute("makseviisList" ,listMakseviis);
             return "vormOsaleja.html";
         }
 
 
-
-
-
-
-
-        Integer osalejateArv = null;
-
-
-        if(oneraisik && !olemasolev){
-            Eraisik eraisik = new Eraisik();
-            isik.setNimi(osalus.getEesnimi() + " " + osalus.getPerekonnanimi());
-            isik.setKood(osalus.getIsikukood());
-            isik.setTyyp(tyyp);
-            isikSaved = isikService.saveCustomer(isik);
-            eraisik.setIsik(isikSaved);
-            eraisik.setIsikukood(osalus.getIsikukood());
-            eraisik.setEesnimi(osalus.getEesnimi());
-            eraisik.setPerekonnanimi(osalus.getPerekonnanimi());
-            Eraisik savedEraisik = eraisikService.saveEraisik(eraisik);
-
-        }
-        if(onettevote && !olemasolev){
-            //System.out.println("saveCustomer: " + isik.getId());
-            Ettevote ettevote = osalus.getEttevote();
-            isik.setNimi(ettevote.getJuriidilinenimi());
-            isik.setKood(ettevote.getRegistrikood());
-            isik.setTyyp(tyyp);
-            isikSaved = isikService.saveCustomer(isik);
-            ettevote.setIsik(isikSaved);
-            Ettevote savedEttevote = ettevoteService.saveEttevote(ettevote);
-
-        }
-
-        if(osalus.getIsikutyypid() == 1){
-            osalejateArv = 1;
-        }
-        if(osalus.getIsikutyypid() == 2){
-            osalejateArv = osalus.getTulijatearv();
-        }
-
-        Long yritusId = osalus.getYritusid();
-
-        Yritus yritus = yritusService.get(yritusId);
-        Makseviis makseviis = makseviisService.get(osalus.getMakseviisid());
-
-
-
-        String lisainfo = osalus.getLisainfo();
-
-        Osalus osalusSalvestatav = new Osalus();
-        osalusSalvestatav.setYritus(yritus);
-        osalusSalvestatav.setIsik(isikSaved);
-        osalusSalvestatav.setMakseviis(makseviis);
-        osalusSalvestatav.setTulijatearv(osalejateArv);
-        osalusSalvestatav.setLisainfo(lisainfo);
-
-        osalusService.saveOsalus(osalusSalvestatav);
+        //Salvesta osalus
+        osalusService.salvestaOsalus(oneraisik, onettevote, olemasolev, isik, osalus, tyyp, isikSaved);
 
         return "redirect:/";
     }
@@ -200,20 +130,17 @@ public class IsikController {
     public String showIsikDetailForm(@PathVariable(name = "id") long id, Model model) {
         Osalus osalus = osalusService.get(id);
         Isik isik = osalus.getIsik();
-
         int tyypId = (isik.getTyyp().getId()).intValue();
         OsalusDto osalusDto = new OsalusDto();
         osalusDto.setId(id);
         osalusDto.setTulijatearv(osalus.getTulijatearv());
         osalusDto.setMakseviisid(osalus.getMakseviis().getId());
         osalusDto.setMakseviisinimetus(osalus.getMakseviis().getNimetus());
-
         osalusDto.setLisainfo(osalus.getLisainfo());
         List<Makseviis> listMakseviis = makseviisService.listAll();
         model.addAttribute("makseviisList" ,listMakseviis);
         if(tyypId == 1){
             Eraisik eraisik = eraisikService.getByIsik(isik);
-            //osalusDto.setEraisik(eraisik);
             osalusDto.setEraisikid(eraisik.getId());
             osalusDto.setEesnimi(eraisik.getEesnimi());
             osalusDto.setPerekonnanimi(eraisik.getPerekonnanimi());
@@ -222,14 +149,12 @@ public class IsikController {
             return "eraisikDetail.html";
         }else{
             Ettevote ettevote = ettevoteService.getByIsik(isik);
-            //osalusDto.setEttevote(ettevote);
             osalusDto.setEttevoteid(ettevote.getId());
             osalusDto.setJuriidilinenimi(ettevote.getJuriidilinenimi());
             osalusDto.setRegistrikood(ettevote.getRegistrikood());
             model.addAttribute("osalus", osalusDto);
             return "ettevoteDetail.html";
         }
-
     }
 
     @RequestMapping(value = "/editeraisikuosalus", method = RequestMethod.POST)
@@ -237,14 +162,11 @@ public class IsikController {
                                BindingResult result) {
         Osalus osalusreferents = osalusService.get(osalus.getId());
         Isik isik = osalusreferents.getIsik();
-
         Eraisik eraisik = eraisikService.getByIsik(isik);
-        //eraisik.setId(osalus.getEraisikid());
         eraisik.setEesnimi(osalus.getEesnimi());
         eraisik.setPerekonnanimi(osalus.getPerekonnanimi());
         eraisik.setIsikukood(osalus.getIsikukood());
         Eraisik eraisikSaved = eraisikService.saveEraisik(eraisik);
-
         isik.setNimi(eraisikSaved.getEesnimi() + " " + eraisikSaved.getPerekonnanimi());
         isik.setKood(eraisikSaved.getIsikukood());
         Isik isikSaved = isikService.saveCustomer(isik);
@@ -257,7 +179,6 @@ public class IsikController {
         osalusUus.setMakseviis(makseviis);
         osalusUus.setLisainfo(osalus.getLisainfo());
         osalusService.saveOsalus(osalusUus);
-
         return "redirect:/";
     }
 
@@ -266,12 +187,10 @@ public class IsikController {
 
         Osalus osalusreferents = osalusService.get(osalus.getId());
         Isik isik = osalusreferents.getIsik();
-
         Ettevote ettevote = ettevoteService.getByIsik(isik);
         ettevote.setJuriidilinenimi(osalus.getJuriidilinenimi());
         ettevote.setRegistrikood(osalus.getRegistrikood());
         Ettevote ettevoteSaved = ettevoteService.saveEttevote(ettevote);
-
         isik.setNimi(ettevoteSaved.getJuriidilinenimi());
         isik.setKood(ettevoteSaved.getRegistrikood());
         Isik isikSaved = isikService.saveCustomer(isik);
@@ -291,10 +210,7 @@ public class IsikController {
     public String deleteIsik(@PathVariable(name = "id") Long id) {
 
         osalusService.delete(id);
-
         return "redirect:/";
     }
-
-
 
 }

@@ -33,6 +33,9 @@
                 <td>Toimumisaeg:</td>
                 <td><input type="datetime-local" th:field="*{aeg}"/></td>
             </tr>
+            <p th:if="${#fields.hasErrors('aeg')}"
+               th:errorclass="error" th:errors="*{aeg}">
+                Kontrolli Toimumisaega</p>
             <tr>
                 <td>Koht:</td>
                 <td><input type="text" th:field="*{koht}"/></td>

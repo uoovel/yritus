@@ -7,87 +7,35 @@ import org.hibernate.validator.constraints.Length;
 public class OsalusDto {
 
     private Long id;
-    private Yritus yritus;
     private Long yritusid;
     private String yritusenimetus;
     private String yrituseaeg;
     private String yritusekoht;
-
-    private Isik isik;
     private Long isikutyypid;
-    private Makseviis makseviis;
     private Long makseviisid;
     private String makseviisinimetus;
-    private Eraisik eraisik;
     private Long eraisikid;
     private String eesnimi;
     private String perekonnanimi;
-
-
     @Length(min=11, max=11, message="{Isikukoodi pikkus?}")
     @Pattern(regexp = "(1|2|3|4)[0-9]{10}", message = "{Isikukoodi muster?}")
     private String isikukood;
-    private Ettevote ettevote;
     private Long ettevoteid;
+
     private String juriidilinenimi;
     private String registrikood;
-
     private Integer tulijatearv;
-
     private String lisainfo;
 
     public OsalusDto(){
 
     };
-
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Yritus getYritus() {
-        return yritus;
-    }
-
-    public void setYritus(Yritus yritus) {
-        this.yritus = yritus;
-    }
-
-    public Isik getIsik() {
-        return isik;
-    }
-
-
-
-    public void setIsik(Isik isik) {
-        this.isik = isik;
-    }
-
-    public Makseviis getMakseviis() {
-        return makseviis;
-    }
-
-    public void setMakseviis(Makseviis makseviis) {
-        this.makseviis = makseviis;
-    }
-
-    public Eraisik getEraisik() {
-        return eraisik;
-    }
-
-    public void setEraisik(Eraisik eraisik) {
-        this.eraisik = eraisik;
-    }
-
-    public Ettevote getEttevote() {
-        return ettevote;
-    }
-
-    public void setEttevote(Ettevote ettevote) {
-        this.ettevote = ettevote;
     }
 
     public Integer getTulijatearv() {

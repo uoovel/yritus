@@ -6,64 +6,8 @@
     <meta charset="utf-8" />
     <title>Lisa uus osaleja</title>
     <link th:href="@{/styles/cssandjs/main.css}" rel="stylesheet" />
-    <script>
-        //var veaga = 2;
-
-        function clickRadioAction(value){
-            if(value == 1){
-                document.getElementById("firmavorm").style.display = "none";
-                document.getElementById("eraisikuvorm").style.display = "initial";
-                document.getElementById("ololera").style.display = "initial";
-                document.getElementById("ololett").style.display = "none";
-                document.getElementById("tulijaid").style.display = "none";
-                document.getElementById("ettevote").value = 0;
-                document.getElementById("eraisik").value = 0;
-            }
-            if(value == 2){
-                document.getElementById("eraisikuvorm").style.display = "none";
-                document.getElementById("firmavorm").style.display = "initial"
-                document.getElementById("ololera").style.display = "none";
-                document.getElementById("ololett").style.display = "initial";
-                document.getElementById("tulijaid").style.display = "initial";
-                document.getElementById("eraisik").value = 0;
-                document.getElementById("ettevote").value = 0;
-            }
-        }
-
-
-        function peidavaljad(veaga){
-
-            if(veaga != "jah"){
-                document.getElementById("firmavorm").style.display = "none";
-                document.getElementById("eraisikuvorm").style.display = "none";
-                document.getElementById("ololera").style.display = "none";
-                document.getElementById("ololett").style.display = "none";
-                document.getElementById("tulijaid").style.display = "none";
-            }
-            if(veaga == "jah"){
-                document.getElementById("firmavorm").style.display = "none";
-                document.getElementById("ololera").style.display = "none";
-                document.getElementById("ololett").style.display = "none";
-                document.getElementById("tulijaid").style.display = "none";
-            }
-        }
-
-        function eraisikListist(value){
-            if(value > 0){
-                document.getElementById("eraisikuvorm").style.display = "none";
-            } else {
-                document.getElementById("eraisikuvorm").style.display = "initial";
-            }
-        }
-        function ettevoteListist(value){
-            if(value > 0){
-                document.getElementById("firmavorm").style.display = "none";
-            } else {
-                document.getElementById("firmavorm").style.display = "initial";
-            }
-        }
-
-    </script>
+    <link th:href="@{/styles/cssandjs/main.js}" rel="stylesheet" />
+    <script>  </script>
 </head>
 <body th:onload="peidavaljad([[${veaga}]])">
 <div class="navbar-header">
@@ -106,7 +50,7 @@
             <tr>
                 <td>Olemasolev isik:</td>
                 <td>
-                    <select th:field="*{eraisik.isik.id}" id="eraisik" name="isik" onchange="eraisikListist(value)">
+                    <select th:field="*{eraisikid}" id="eraisik" name="isik" onchange="eraisikListist(value)">
                         <option value="0" th:disabled="disabled">--palun vali--</option>
                         <option value="0">Ei leidu</option>
 
@@ -143,6 +87,7 @@
 
                     </td>
                 </tr>
+
                 <p th:if="${#fields.hasErrors('isikukood')}"
                    th:errorclass="error" th:errors="*{isikukood}">
                     Check Isikukood</p>
@@ -159,7 +104,7 @@
                 <tr>
                     <td>Olemasolev isik:</td>
                     <td>
-                        <select th:field="*{ettevote.isik.id}" id="ettevote" name="isik" onchange="ettevoteListist(value)">
+                        <select th:field="*{ettevoteid}" id="ettevote" name="isik" onchange="ettevoteListist(value)">
                             <option value="0" th:disabled="disabled">--palun vali--</option>
                             <option value="0">Ei leidu</option>
 
@@ -180,12 +125,12 @@
 
                 <tr>
                     <td>Juriidiline Nimi:</td>
-                    <td><input type="text" th:field="*{ettevote.juriidilinenimi}" />
+                    <td><input type="text" th:field="*{juriidilinenimi}" />
                     </td>
                 </tr>
                 <tr>
                     <td>Registrikood:</td>
-                    <td><input type="text" th:field="*{ettevote.registrikood}" />
+                    <td><input type="text" th:field="*{registrikood}" />
                     </td>
                 </tr>
 
@@ -202,7 +147,7 @@
         </div>
 
 
-        <div>
+<div id="postnupp">
             <table border="0" cellpadding="10" >
 
                 <tr>
@@ -230,10 +175,67 @@
                     <td colspan="2"><button type="submit">Salvesta</button> </td>
                 </tr>
             </table>
-        </div>
+</div>
 
     </form>
 </div>
 
 </body>
+<script>
+    function clickRadioAction(value){
+    if(value == 1){
+        document.getElementById("firmavorm").style.display = "none";
+        document.getElementById("eraisikuvorm").style.display = "initial";
+        document.getElementById("ololera").style.display = "initial";
+        document.getElementById("ololett").style.display = "none";
+        document.getElementById("tulijaid").style.display = "none";
+        document.getElementById("ettevote").value = 0;
+        document.getElementById("eraisik").value = 0;
+    }
+    if(value == 2){
+        document.getElementById("eraisikuvorm").style.display = "none";
+        document.getElementById("firmavorm").style.display = "initial"
+        document.getElementById("ololera").style.display = "none";
+        document.getElementById("ololett").style.display = "initial";
+        document.getElementById("tulijaid").style.display = "initial";
+        document.getElementById("eraisik").value = 0;
+        document.getElementById("ettevote").value = 0;
+    }
+    document.getElementById("postnupp").style.display = "initial";
+}
+
+
+function peidavaljad(veaga){
+
+    if(veaga != "jah"){
+        document.getElementById("firmavorm").style.display = "none";
+        document.getElementById("eraisikuvorm").style.display = "none";
+        document.getElementById("ololera").style.display = "none";
+        document.getElementById("ololett").style.display = "none";
+        document.getElementById("tulijaid").style.display = "none";
+        document.getElementById("postnupp").style.display = "none";
+    }
+    if(veaga == "jah"){
+        document.getElementById("firmavorm").style.display = "none";
+        document.getElementById("ololera").style.display = "none";
+        document.getElementById("ololett").style.display = "none";
+        document.getElementById("tulijaid").style.display = "none";
+    }
+}
+
+function eraisikListist(value){
+    if(value > 0){
+        document.getElementById("eraisikuvorm").style.display = "none";
+    } else {
+        document.getElementById("eraisikuvorm").style.display = "initial";
+    }
+}
+function ettevoteListist(value){
+    if(value > 0){
+        document.getElementById("firmavorm").style.display = "none";
+    } else {
+        document.getElementById("firmavorm").style.display = "initial";
+    }
+}
+</script>
 </html>

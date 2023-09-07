@@ -65,7 +65,6 @@ public class AvalehtController {
                 yritusDto.setOsalejaid(0);
             }
 
-
             if(yrituseAeg.getTime() > nowLong){
                 listYritusDtoTulevik.add(yritusDto);
             } else {
@@ -81,7 +80,6 @@ public class AvalehtController {
 
     @RequestMapping("/koikOsalejad/{id}")
     public String koikOsalejad(@PathVariable(name = "id") int id, Model model){
-        System.out.println(id);
         Yritus yritus = yritusService.get(id);
         List<Osalus> osalusList = osalusService.getOsalussByYritus(yritus);
         model.addAttribute("listOsalus", osalusList);

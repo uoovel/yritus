@@ -21,10 +21,6 @@ public class EraisikService {
         return savederaIsik;
     }
 
-
-
-
-
     public Eraisik getByIsik(Isik isik) {
         return eraisikRepository.findOneByIsik(isik);
     }
