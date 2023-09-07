@@ -7,13 +7,14 @@
     <link th:href="@{/styles/cssandjs/main.css}" rel="stylesheet" />
 </head>
 <body>
-<div align="center">
+<div class="navbar-header">
+    <div class="navi">
     <a href="/">Avaleht</a>
     <a href="/newevent">Ürituse lisamine</a>
-
+    </div>
 </div>
 <div align="center">
-    <div><h1>Osavõtja info</h1></div>
+    <div><h2>Osavõtja info</h2></div>
 
     <br />
     <form action="#" th:action="@{/editettevotteosalus}" th:object="${osalus}"

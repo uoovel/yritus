@@ -7,10 +7,11 @@
     <link th:href="@{/styles/cssandjs/main.css}" rel="stylesheet" />
 </head>
 <body>
-<div align="center">
+<div class="navbar-header">
+    <div class="navi">
     <a href="/">Avaleht</a>
     <a href="/newevent">Ürituse lisamine</a>
-
+    </div>
 </div>
 <div align="center">
     <div th:if="${yritus.id == null}"><h1>Loo uus üritus</h1></div>

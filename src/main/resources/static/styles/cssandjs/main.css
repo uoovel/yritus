@@ -8,3 +8,10 @@ body {
 	border: 1px;
     background-color: white;
 }
+.navbar-header {
+    color: #fff;
+    background-color: #e4f2fd;
+}
+.navi{
+    text-align: right;
+}
