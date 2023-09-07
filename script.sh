@@ -50,6 +50,31 @@ else
 	echo "Vigu pole, kood: $status_code -> "$value
 fi
 
+#POST
+value="http://localhost:8080/editettevotteosalus"
+
+catch response_data status_code curl -ks -w "%{stderr}%{http_code}" -H "Content-type: application/x-www-form-urlencoded"  -d "id=1&registrikood=342c&isikutyypid=2&juriidilinenimi=ABC&yritusid=1&makseviisid=1&tulijatearv=11"  -X POST   $value
+if [ "$status_code" != "302" ]; then
+	echo -e "\e[31mError: $status_code -> "$value
+
+else
+	echo "Vigu pole, kood: $status_code -> "$value
+fi
+
+#DELETE
+
+urldel[1]="http://localhost:8080/deleteOsalus/2"
+
+for valdel in "${urldel[@]}"
+do
+	catch response_data status_code curl -ks -w "%{stderr}%{http_code}" -X DELETE $valdel
+	if [ "$status_code" != "302" ]; then
+		echo -e "\e[31mError: $status_code -> "$valdel
+
+	else
+	echo "Vigu pole, kood: $status_code -> "$valdel
+	fi
+done
 
 
 

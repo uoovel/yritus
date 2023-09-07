@@ -80,8 +80,8 @@ public class IsikController {
 
 
         String contType = request.getContentType();
-        System.out.println("saveCustomer100: " + contType);
-        System.out.println("Isikukood:" + osalus.getIsikukood());
+        //System.out.println("saveCustomer100: " + contType);
+        //System.out.println("Isikukood:" + osalus.getIsikukood());
 
 
         Long eraisikId = Long.valueOf(0);
@@ -222,7 +222,10 @@ public class IsikController {
             return "eraisikDetail.html";
         }else{
             Ettevote ettevote = ettevoteService.getByIsik(isik);
-            osalusDto.setEttevote(ettevote);
+            //osalusDto.setEttevote(ettevote);
+            osalusDto.setEttevoteid(ettevote.getId());
+            osalusDto.setJuriidilinenimi(ettevote.getJuriidilinenimi());
+            osalusDto.setRegistrikood(ettevote.getRegistrikood());
             model.addAttribute("osalus", osalusDto);
             return "ettevoteDetail.html";
         }
@@ -265,8 +268,8 @@ public class IsikController {
         Isik isik = osalusreferents.getIsik();
 
         Ettevote ettevote = ettevoteService.getByIsik(isik);
-        ettevote.setJuriidilinenimi(osalus.getEttevote().getJuriidilinenimi());
-        ettevote.setRegistrikood(osalus.getEttevote().getRegistrikood());
+        ettevote.setJuriidilinenimi(osalus.getJuriidilinenimi());
+        ettevote.setRegistrikood(osalus.getRegistrikood());
         Ettevote ettevoteSaved = ettevoteService.saveEttevote(ettevote);
 
         isik.setNimi(ettevoteSaved.getJuriidilinenimi());

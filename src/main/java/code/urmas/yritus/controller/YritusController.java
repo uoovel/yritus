@@ -44,8 +44,8 @@ public class YritusController {
         String kuupaev = yrituseAeg.substring(0,10);
         String kell = yrituseAeg.substring(11,16);
         String yrituseAeg2 = kuupaev + " " + kell + ":00";
-        System.out.println("YritusController100: " + yrituseAeg);
-        System.out.println("YritusController200: " + yrituseAeg2);
+        //System.out.println("YritusController100: " + yrituseAeg);
+        //System.out.println("YritusController200: " + yrituseAeg2);
         Timestamp aegts = Timestamp.valueOf(yrituseAeg2);
         Yritus yritus = new Yritus();
         yritus.setNimetus(yritusDto.getNimetus());

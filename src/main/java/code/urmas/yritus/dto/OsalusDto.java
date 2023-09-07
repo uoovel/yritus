@@ -28,6 +28,9 @@ public class OsalusDto {
     @Pattern(regexp = "(1|2|3|4)[0-9]{10}", message = "{Isikukoodi muster?}")
     private String isikukood;
     private Ettevote ettevote;
+    private Long ettevoteid;
+    private String juriidilinenimi;
+    private String registrikood;
 
     private Integer tulijatearv;
 
@@ -189,5 +192,29 @@ public class OsalusDto {
 
     public void setMakseviisinimetus(String makseviisinimetus) {
         this.makseviisinimetus = makseviisinimetus;
+    }
+
+    public Long getEttevoteid() {
+        return ettevoteid;
+    }
+
+    public void setEttevoteid(Long ettevoteid) {
+        this.ettevoteid = ettevoteid;
+    }
+
+    public String getJuriidilinenimi() {
+        return juriidilinenimi;
+    }
+
+    public void setJuriidilinenimi(String juriidilinenimi) {
+        this.juriidilinenimi = juriidilinenimi;
+    }
+
+    public String getRegistrikood() {
+        return registrikood;
+    }
+
+    public void setRegistrikood(String registrikood) {
+        this.registrikood = registrikood;
     }
 }

@@ -37,7 +37,6 @@ public class AvalehtController {
     public String avaleht(Model model){
         List<Tyyp> tyypList = tyypService.listAll();
         if(tyypList.isEmpty()){
-            System.out.println("AvalehtController100: ");
             startService.lisaAlgandmed();
         }
 
@@ -68,7 +67,6 @@ public class AvalehtController {
 
 
             if(yrituseAeg.getTime() > nowLong){
-                System.out.println("AvalehtController200: " + yrituseAeg);
                 listYritusDtoTulevik.add(yritusDto);
             } else {
                 listYritusDtoMinevik.add(yritusDto);
