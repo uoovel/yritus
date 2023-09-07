@@ -77,13 +77,13 @@
 <div align="center">
     <table>
         <tr>
-            <td>Ürituse nimi:</td><td><a th:text="${osalus.yritus.nimetus}"></a></td>
+            <td>Ürituse nimi:</td><td><a th:text="${osalus.yritusenimetus}"></a></td>
         </tr>
         <tr>
-            <td>Toimumisaeg:</td><td><a th:text="${osalus.yritus.aeg}"></a></td>
+            <td>Toimumisaeg:</td><td><a th:text="${osalus.yrituseaeg}"></a></td>
         </tr>
         <tr>
-            <td>Koht:</td><td><a th:text="${osalus.yritus.koht}"></a></td>
+            <td>Koht:</td><td><a th:text="${osalus.yritusekoht}"></a></td>
         </tr>
     </table>
 
@@ -93,14 +93,14 @@
     <form action="#" th:action="@{/savecustomer}" th:object="${osalus}"
           method="post">
 
-        <input type="hidden" th:field="*{yritus.id}" th:value="${osalus.yritus.id}" />
+        <input type="hidden" th:field="*{yritusid}" th:value="${osalus.yritusid}" />
 
 
 
 
         <a th:each="ty : ${listTyyp}">
-            <input type="radio" th:field="*{isik.tyyp}" th:value="${ty.id}" th:onclick="clickRadioAction(value)"/>
-            <label th:for="${#ids.prev('isik.tyyp')}" th:text="${ty.nimetus}">Wireframe</label>
+            <input type="radio" th:field="*{isikutyypid}" th:value="${ty.id}" th:onclick="clickRadioAction(value)"/>
+            <label th:for="${#ids.prev('isikutyypid')}" th:text="${ty.nimetus}">Wireframe</label>
         </a>
         <div id="ololera">
         <table>
@@ -129,12 +129,12 @@
             <table>
                 <tr>
                     <td>Eesnimi:</td>
-                    <td><input type="text" th:field="*{eraisik.eesnimi}" />
+                    <td><input type="text" th:field="*{eesnimi}" />
                     </td>
                 </tr>
                 <tr>
                     <td>Perekonnanimi:</td>
-                    <td><input type="text" th:field="*{eraisik.perekonnanimi}" />
+                    <td><input type="text" th:field="*{perekonnanimi}" />
                     </td>
                 </tr>
 
@@ -209,7 +209,7 @@
                 <tr>
                     <td>Makseviis:</td>
                     <td>
-                        <select th:field="*{makseviis.id}" id="makseviis" name="makseviis">
+                        <select th:field="*{makseviisid}" id="makseviis" name="makseviis">
                             <option value="0" th:disabled="disabled">--palun vali--</option>
 
                             <th:block th:each="makseviis: ${makseviisList}">

@@ -23,6 +23,8 @@ public class StartService {
     private EttevoteRepository ettevoteRepository;
     @Autowired
     private OsalusRepository osalusRepository;
+    @Autowired
+    private EraisikRepository eraisikRepository;
 
     public void lisaAlgandmed(){
         Tyyp tyyp1 = new Tyyp();
@@ -64,6 +66,26 @@ public class StartService {
         osalus.setMakseviis(makseviis2Saved);
         osalus.setTulijatearv(5);
         osalusRepository.save(osalus);
+
+        String eesnimi = "Paul";
+        String perekonnanimi = "Pajupuu";
+        isik = new Isik();
+        isik.setNimi(eesnimi + " " + perekonnanimi);
+        isik.setTyyp(tyyp1Saved);
+        isikSaved = isikRepository.save(isik);
+        Eraisik eraisik = new Eraisik();
+        eraisik.setEesnimi(eesnimi);
+        eraisik.setPerekonnanimi(perekonnanimi);
+        eraisik.setIsik(isikSaved);
+        Eraisik eraisikSaved = eraisikRepository.save(eraisik);
+
+        osalus = new Osalus();
+        osalus.setYritus(yritusSaved);
+        osalus.setIsik(isikSaved);
+        osalus.setMakseviis(makseviis2Saved);
+        osalus.setTulijatearv(1);
+        osalusRepository.save(osalus);
+
     }
 
 }

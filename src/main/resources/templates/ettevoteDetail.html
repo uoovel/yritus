@@ -40,8 +40,8 @@
             <tr>
                 <td>Makseviis:</td>
                 <td>
-                    <select th:field="*{makseviis.id}" id="makseviis" name="makseviis">
-                        <option th:utext="${osalus.makseviis.nimetus}" th:value="${osalus.makseviis.id}"/>
+                    <select th:field="*{makseviisid}" id="makseviis" name="makseviis">
+                        <option th:utext="${osalus.makseviisinimetus}" th:value="${osalus.makseviisid}"/>
 
                         <th:block th:each="makseviis: ${makseviisList}">
 

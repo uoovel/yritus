@@ -8,10 +8,21 @@ public class OsalusDto {
 
     private Long id;
     private Yritus yritus;
+    private Long yritusid;
+    private String yritusenimetus;
+    private String yrituseaeg;
+    private String yritusekoht;
 
     private Isik isik;
+    private Long isikutyypid;
     private Makseviis makseviis;
+    private Long makseviisid;
+    private String makseviisinimetus;
     private Eraisik eraisik;
+    private Long eraisikid;
+    private String eesnimi;
+    private String perekonnanimi;
+
 
     @Length(min=11, max=11, message="{Isikukoodi pikkus?}")
     @Pattern(regexp = "(1|2|3|4)[0-9]{10}", message = "{Isikukoodi muster?}")
@@ -45,6 +56,8 @@ public class OsalusDto {
     public Isik getIsik() {
         return isik;
     }
+
+
 
     public void setIsik(Isik isik) {
         this.isik = isik;
@@ -96,5 +109,85 @@ public class OsalusDto {
 
     public void setIsikukood(String isikukood) {
         this.isikukood = isikukood;
+    }
+
+    public Long getIsikutyypid() {
+        return isikutyypid;
+    }
+
+    public void setIsikutyypid(Long isikutyypid) {
+        this.isikutyypid = isikutyypid;
+    }
+
+    public String getEesnimi() {
+        return eesnimi;
+    }
+
+    public void setEesnimi(String eesnimi) {
+        this.eesnimi = eesnimi;
+    }
+
+    public String getPerekonnanimi() {
+        return perekonnanimi;
+    }
+
+    public void setPerekonnanimi(String perekonnanimi) {
+        this.perekonnanimi = perekonnanimi;
+    }
+
+    public Long getYritusid() {
+        return yritusid;
+    }
+
+    public void setYritusid(Long yritusid) {
+        this.yritusid = yritusid;
+    }
+
+    public Long getMakseviisid() {
+        return makseviisid;
+    }
+
+    public void setMakseviisid(Long makseviisid) {
+        this.makseviisid = makseviisid;
+    }
+
+    public String getYritusenimetus() {
+        return yritusenimetus;
+    }
+
+    public void setYritusenimetus(String yritusenimetus) {
+        this.yritusenimetus = yritusenimetus;
+    }
+
+    public String getYrituseaeg() {
+        return yrituseaeg;
+    }
+
+    public void setYrituseaeg(String yrituseaeg) {
+        this.yrituseaeg = yrituseaeg;
+    }
+
+    public String getYritusekoht() {
+        return yritusekoht;
+    }
+
+    public void setYritusekoht(String yritusekoht) {
+        this.yritusekoht = yritusekoht;
+    }
+
+    public Long getEraisikid() {
+        return eraisikid;
+    }
+
+    public void setEraisikid(Long eraisikid) {
+        this.eraisikid = eraisikid;
+    }
+
+    public String getMakseviisinimetus() {
+        return makseviisinimetus;
+    }
+
+    public void setMakseviisinimetus(String makseviisinimetus) {
+        this.makseviisinimetus = makseviisinimetus;
     }
 }

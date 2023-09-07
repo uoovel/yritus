@@ -23,24 +23,24 @@
         <table border="0" cellpadding="10">
             <tr>
                 <td>Eesnimi:</td>
-                <td><input type="text" th:field="*{eraisik.eesnimi}" />
+                <td><input type="text" th:field="*{eesnimi}" />
                 </td>
             </tr>
             <tr>
                 <td>Perekonnanimi:</td>
-                <td><input type="text" th:field="*{eraisik.perekonnanimi}" />
+                <td><input type="text" th:field="*{perekonnanimi}" />
                 </td>
             </tr>
             <tr>
                 <td>Isikukood:</td>
-                <td><input type="text" th:field="*{eraisik.isikukood}" />
+                <td><input type="text" th:field="*{isikukood}" />
                 </td>
             </tr>
             <tr>
                 <td>Makseviis:</td>
                 <td>
-                    <select th:field="*{makseviis.id}" id="makseviis" name="makseviis">
-                        <option th:utext="${osalus.makseviis.nimetus}" th:value="${osalus.makseviis.id}"/>
+                    <select th:field="*{makseviisid}" id="makseviis" name="makseviis">
+                        <option th:utext="${osalus.makseviisinimetus}" th:value="${osalus.makseviisid}"/>
 
                         <th:block th:each="makseviis: ${makseviisList}">
 

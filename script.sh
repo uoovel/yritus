@@ -13,6 +13,7 @@ catch() {
 url[1]="http://localhost:8080/"
 url[2]="http://localhost:8080/koikOsalejad/1"
 url[3]="http://localhost:8080/vormOsaleja/1"
+url[4]="http://localhost:8080/vaataOsalust/1"
 
 
 
@@ -30,8 +31,19 @@ done
 #POST
 value="http://localhost:8080/savecustomer"
 
-catch response_data status_code curl -H "Content-type: application/x-www-form-urlencoded"  -d "isikukood=31111111111"  -X POST  "%{stderr}%{http_code}" $value
-if [ "$status_code" != "200" ]; then
+catch response_data status_code curl -ks -w "%{stderr}%{http_code}" -H "Content-type: application/x-www-form-urlencoded"  -d "isikukood=41111111111&isikutyypid=1&eesnimi=Karin&perekonnanimi=Kask&yritusid=1&makseviisid=2"  -X POST   $value
+if [ "$status_code" != "302" ]; then
+	echo -e "\e[31mError: $status_code -> "$value
+
+else
+	echo "Vigu pole, kood: $status_code -> "$value
+fi
+
+#POST
+value="http://localhost:8080/editeraisikuosalus"
+
+catch response_data status_code curl -ks -w "%{stderr}%{http_code}" -H "Content-type: application/x-www-form-urlencoded"  -d "id=2&isikukood=31111111111&isikutyypid=1&eesnimi=Raul&perekonnanimi=Raju&yritusid=1&makseviisid=2"  -X POST   $value
+if [ "$status_code" != "302" ]; then
 	echo -e "\e[31mError: $status_code -> "$value
 
 else

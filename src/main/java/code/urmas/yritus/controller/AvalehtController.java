@@ -37,6 +37,7 @@ public class AvalehtController {
     public String avaleht(Model model){
         List<Tyyp> tyypList = tyypService.listAll();
         if(tyypList.isEmpty()){
+            System.out.println("AvalehtController100: ");
             startService.lisaAlgandmed();
         }
 
@@ -46,7 +47,7 @@ public class AvalehtController {
         List<YritusDto> listYritusDtoMinevik = new ArrayList<>();
         Timestamp timestampNow = Timestamp.valueOf(LocalDateTime.now());
         Long nowLong = timestampNow.getTime();
-        //System.out.println("AvalehtController100: " + dateTime);
+
         //Timestamp aegPraegu =
 
         for (int i = 0; i < listYritused.size(); i++) {
