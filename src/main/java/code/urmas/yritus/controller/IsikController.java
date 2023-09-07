@@ -3,6 +3,7 @@ package code.urmas.yritus.controller;
 import code.urmas.yritus.model.*;
 import code.urmas.yritus.service.*;
 import code.urmas.yritus.dto.OsalusDto;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.net.http.HttpRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,9 +72,13 @@ public class IsikController {
     @RequestMapping(value = "/savecustomer", method = RequestMethod.POST)
     public String saveCustomer(
             @Valid @ModelAttribute("osalus") OsalusDto osalus,
-            BindingResult result, Model model) {
+            BindingResult result, Model model,
+            HttpServletRequest request) {
 
 
+        String contType = request.getContentType();
+        System.out.println("saveCustomer100: " + contType);
+        System.out.println("Isikukood:" + osalus.getIsikukood());
 
 
         Long eraisikId = Long.valueOf(0);
